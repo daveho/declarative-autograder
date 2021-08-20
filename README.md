@@ -15,3 +15,11 @@ representing tests and test outcomes, which could be translated into formats
 other than a Gradescope `results.json` file.
 
 The code is distributed under the MIT license.  Comments to <mailto:david.hovemeyer@gmail.com>
+
+## Documentation
+
+See the [Guide](guide.html) and the [API documentation](doc/index.html).
+
+## Examples
+
+One way to see how the framework is to look at examples. (TODO: link to examples)

@@ -33,22 +33,39 @@ if !File.directory?('files') and File.directory?('source/files')
   $files = 'source/files'
 end
 
-# Default timeout for executed commands
+# Default timeout for executed commands, in seconds.
 DEFAULT_TIMEOUT = 20
 
-# Default subprocess success predicate
+# Default subprocess success predicate.
+# The default implementation returns +true+ if +status.success?+ evaluates
+# to a true value.
 DEFAULT_SUCCESS_PRED = ->(status, stdout_str, stderr_str) do
   return status.success?
 end
 
-# Wrapper class for rubric, simplifies lookup of item by testname
+# Wrapper class for rubric.
+# It simplifies the lookup of rubric items by testname.
+# This class is used internally for test execution and test outcome
+# reporting, so autograders won't generally need to use it directly.
+# An instance of Rubric is pass to task's +call+ method as the
+# +rubric+ parameter.
+#
+# A rubric specification is an array of _rubric items_.
+# Each rubric item is an array with three members:
+# - _testname_, a Symbol uniquely identifying a test
+# - _description_, a String providing a short description of the test
+# - _points_, a number indicating how many points the test is worth
 class Rubric
   attr_reader :spec
 
+  # @param [Array] spec Initialize a Rubric object from an array of rubric items
   def initialize(spec)
     @spec = spec
   end
 
+  # Get the description string corresponding to the given test name.
+  # @param [Symbol] testname the test name
+  # @return [String] the description for the test
   def get_desc(testname)
     @spec.each do |tuple|
       return tuple[1] if tuple[0] == testname
@@ -57,7 +74,6 @@ class Rubric
   end
 end
 
-##
 # A Logger object is used by tasks to generate private output
 # (visible only to instructors) and public output (visible to students).
 #
@@ -147,19 +163,15 @@ end
 #   rubric: the rubric describing the tests
 # in general, tasks can (and should) be lambdas
 
-##
 # Public front-end namespace for the autograder framework.
 class X
-  #
   # Build an array consisting of all arguments as elements, with the
   # exception that arguments that are arrays will have their elements
   # added.  This is useful for building a large argument array
   # out of an arbitrary combination of arrays and individual values.
   #
-  # This is exactly the same idea as list flattening in functional languages.
-  #
-  # @param [Array] args the array of values to flatten
-  # @return [Array] array containing the flattened representation of all of the non-array values in +args+
+  # @param args the sequence of values to build
+  # @return [Array] array containing the discovered non-array values in +args+
   def self.combine(*args)
     result = []
     args.each do |arg|
@@ -172,7 +184,6 @@ class X
     return result
   end
 
-  ##
   # Return list of files matching specified "file glob" pattern in +files+ directory.
   # "File glob" means "shell wildcard", and the pattern is expanded by the Unix shell.
   # This is not a task, it returns an array of the filenamess matching the pattern.
@@ -190,11 +201,13 @@ class X
     return result
   end
 
-  # Copy one or more files from the 'files' directory into the 'submission' directory
+  # Copy one or more files from the +files+ directory into the +submission+ directory.
+  # This is useful for copying test scripts, secret inputs and expected outputs,
+  # and other data needed for test execution prior to executing tests.
   #
-  # Options:
-  #   subdir: if specified, files are copied into this subdirectory of submission
-  #   report_command: if true, command is reported to student (defaults to true)
+  # @param files filenames to copy from +files+ to +submission+
+  # @param subdir if specified (non-nil), files are copied into this subdirectory of +submission+
+  # @param report_command if +true+, command is reported to student (defaults to +true+)
   def self.copy(*files, subdir: nil, report_command: true)
     raise "Internal error: no file specified to copy" if files.empty?
     if files.size == 1
@@ -214,7 +227,9 @@ class X
     end
   end
 
-  # Recursively copy one or more entire directories from the 'files' directory into the 'submission' directory
+  # Recursively copy one or more entire directories from the +files+ directory into the +submission+ directory
+  #
+  # @param dirnames directory names to recursively copy from +files+ into +submission+
   def self.copydir(*dirnames)
     raise "Internal error: no directory specified to copy" if dirnames.empty?
     if dirnames.size == 1
@@ -232,12 +247,13 @@ class X
     end
   end
 
-  # Check to see if files in the submission directory exist.
-  # Task will produce a true outcome IFF all of the files exist.
+  # Returns a task which will check to see if files in the +submission+ directory exist.
+  # The returned task will push a true outcome if and only if all of the files exist.
   #
-  # Options:
-  #   check_exe: if true, also check that file(s) are executable (default false)
-  #   subdir: if set, file(s) are checked in specified subdirectory of 'submission'
+  # @param filenames filenames of which to check existence
+  # @param check_exe if true, the returned task will also check that file(s) are executable (default false)
+  # @param [String] subdir if set, file(s) are checked in specified subdirectory of +submission+
+  # @return the task object
   def self.check(*filenames, check_exe: false, subdir: nil)
     return ->(outcomes, results, logger, rubric) do
       checkdir = subdir.nil? ? 'submission' : "submission/#{subdir}"
@@ -258,22 +274,27 @@ class X
 
   # Check to see if files in the submission directory exist and are executable.
   # Task will produce a true outcome IFF all of the files exist and are executable.
+  #
+  # @param filenames filenames of which to check existence/executability
+  # @param [String] subdir if set (non-nil), file(s) are checked in specified subdirectory of +submission+
+  # @return the task object
   def self.check_exe(*filenames, subdir: nil)
     return check(*filenames, check_exe: true, subdir: subdir)
   end
 
-  # Use the check_exe function instead: this is just here for backwards
-  # compatibility.
+  # @deprecated Please use {check_exe} instead
   def self.checkExe(*filenames, subdir: nil)
     return check_exe(*filenames, subdir: subdir)
   end
 
-  # Run make in the 'submission' directory (or a specified subdirectory).
-  # Parameters passed to this task are passed as command-line arguments
-  # to make.  With no arguments, the default target will be built.
+  # Create and return a task to run +make+ in the +submission+ directory
+  # (or a specified subdirectory).  Parameters passed to this function are passed
+  # as command-line arguments to +make+ (when the task is executed).  With no
+  # arguments, the default target will be built.
   #
-  # Options:
-  #   subdir: if specified, make is run in this subdirectory of 'submission'
+  # @param makeargs argument strings to pass to +make+
+  # @param [String] subdir if specified, make is run in this subdirectory of +submission+
+  # @return the task object
   def self.make(*makeargs, subdir: nil)
     return ->(outcomes, results, logger, rubric) do
       # Determine where to run make
@@ -301,25 +322,28 @@ class X
     end
   end
 
-  # Run a command in the 'submission' directory (or a specified subdirectory).
+  # Create and return a task to run a command (program or script)
+  # in the +submission+ directory (or a specified subdirectory).
   #
-  # Options:
-  #   timeout: timeout in seconds
-  #   report_command: report the executed command to student, defaults to true
-  #   report_stdout: report command stdout to student, defaults to false
-  #   report_stderr: report command stderr to student, defaults to false
-  #   report_outcome: report "Command failed!" if command fails (and report_command is true), defaults to true
-  #   stdin_filename: name of file to send to command's stdin, defaults to nil (meaning empty stdin is sent)
-  #   stdout_filename: name of file to write command's stdout to (in the submission directory),
-  #                    defaults to nil (meaning that stdout is not written anywhere)
-  #   subdir: if specified, the command is run in this subdirectory of 'submission'
-  #   env: if specified, hash with additional environment variables to set for subprocess
-  #   success_pred: predicate to check subprocess success: must have a call method that
+  # Note that if +stdin_filename+ is specified, its entire contents are read into memory,
+  # so you should avoid sending very large files that way.
+  #
+  # @param  cmd the comand to run (first value is program, subsequent values are program arguments)
+  # @param  timeout timeout in seconds
+  # @param  report_command report the executed command to student
+  # @param  report_stdout report command stdout to student
+  # @param  report_stderr report command stderr to student
+  # @param  report_outcome report "Command failed!" if command fails (and report_command is true)
+  # @param  stdin_filename name of file to send to command's stdin (if not specified, empty stdin is sent)
+  # @param  stdout_filename name of file to write command's stdout to (in the submission directory,
+  #                    if not specified, no output file is written)
+  # @param  subdir if specified, the command is run in this subdirectory of +submission+
+  # @param  env if specified, hash with additional environment variables to set for subprocess
+  # @param  success_pred predicate to check subprocess success: must have a +call+ method that
   #                 takes process status object, standard output string, and
   #                 standard error string as parameters, defaults to just checking
   #                 status.success?
-  #
-  # Note that if stdin_filename is specified, its entire contents are read into memory.
+  # @return the task object
   def self.run(*cmd,
                timeout: DEFAULT_TIMEOUT,
                report_command: true,
