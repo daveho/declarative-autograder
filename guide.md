@@ -1,7 +1,12 @@
-# Guide to using the declarative autograder framework (DAF)
+# Guide to using the Declarative Autograder Framework (DAF)
 
 This document explains the concepts and techniques needed to use the
 [Declarative Autograder Framework](https://github.com/daveho/declarative-autograder).
+
+In addition to reading this guide document, you should also look at
+the autograder examples (TODO: link to examples), since they show
+how these concepts and techniques are applied in practice.
+
 
 ## Background, philosophy
 
@@ -142,7 +147,54 @@ in the assignment description.
 
 ### Tasks and task results
 
-TODO
+A *task* is a behavior to be executed as part of the autograder.  DAF
+can create a variety of different kinds of tasks to carry out behaviors useful
+for autograding.  For example, the [X.run](https://daveho.github.io/declarative-autograder/X.html#run-class_method)
+task runs a program.  All tasks will produce at least one boolean value
+to indicate success or failure.
+
+A task's *call* method executes the task.  To report the result of the task,
+one or more boolean values are pushed onto an outcomes array.
+Nearly all tasks push a single boolean value. The only exception are tasks created by
+[X.inorder](https://daveho.github.io/declarative-autograder/X.html#inorder-class_method)),
+which can push multiple values.
+
+Tasks created by [X.test](https://daveho.github.io/declarative-autograder/X.html#test-class_method)
+represent the execution of a test associated with a rubric item.  Let's say that the program
+being tested is a calculator program.  A test execution might look like this:
+
+```ruby
+X.test(:test_add, X.run('./test_calculator.sh', '5', './calc', '2 + 3'))
+```
+
+The code above indicates that to run the `:test_add` test, the `./test_caculator.sh`
+script should be run with the arguments `5`, `./calc`, and `2 + 3`.
+If the script succeeds (exits normally with a 0 exit code), then the `X.run` task
+pushes a true outcome value, and `X.test` records the `:test_add` test as passing.
+If the script fails (exits abnormally and/or exits with a non-zero exit code),
+then `X.test` records `:test_add` as failing.  (In general, `X.test` tasks will
+consider the subordinate task to have succeeded if the most recent boolean
+value pushed is true.  Since all tasks other than `X.inorder` tasks push only
+a single boolean value, in practice you can think of every task yielding a
+single true or false value indicating whether it succeeded or failed.)
+
+Other kinds of tasks are useful for other important autograder behaviors.
+For example, [X.make](https://daveho.github.io/declarative-autograder/X.html#make-class_method)
+runs the `make` utility to compile a program, and
+[X.copy](https://daveho.github.io/declarative-autograder/X.html#copy-class_method)
+copies files that will be needed to compile the student's program and/or run tests.
+
+Internally, a task is implemented by a Ruby object supporting a `call` method taking four arguments:
+
+* `outcomes`: list of booleans containing previous test results
+* `results`: map of testnames to scores (for reporting)
+* `logger`: for logging diagnostics
+* `rubric`: the rubric describing the tests
+
+You won't need to know how tasks work internally unless you want to create your
+own custom task objects.  If you look at the source code for
+[autograder2.rb](https://github.com/daveho/declarative-autograder/blob/master/autograder2.rb), you'll notice that 
+tasks are implemented as Ruby lambdas.
 
 ### `X.all` and `X.inorder`
 
