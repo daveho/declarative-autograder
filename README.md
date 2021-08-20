@@ -1,4 +1,4 @@
-# Declarative autograder framework
+# DAF — a Declarative Autograder Framework
 
 This is an experiment to create a general-purpose framework for implementing
 [Gradescope](https://www.gradescope.com/) autograders.  (You should read
