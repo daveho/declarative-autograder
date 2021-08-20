@@ -285,7 +285,7 @@ tasks provide complete flexibility in determining which tasks are executed.  The
 [X.all](https://daveho.github.io/declarative-autograder/X.html#all-class_method)
 task shown above could form the *test plan* for an autograder.
 
-### Test plan, test outcomes
+### Test plan, test outcomes, log messages
 
 As hinted in the section above, a *test plan* is simply a task which, when
 executed, will carry out all of the subordinate tasks needed to test and
@@ -294,13 +294,39 @@ evaluate the submitted student program.  The test plan is typically created usin
 so that the successful completion of mandatory prerequisite tasks
 can be guaranteed before functional tests are executed.
 
-<!--
-As `X.test`
--->
+As tests are executed by
+[X.test](https://daveho.github.io/declarative-autograder/X.html#test-class_method)
+tasks, DAF will update a *results map* recording the outcome of each test.
+In the results map, each executed test (identified by the testname symbol,
+e.g. `:test_case_1` in the previous example) is mapped to an *outcome pair*.
+The outcome pair consists of two values:
 
-### Results
+* the first value is a number, either 0.0 (failure) or 1.0 (success)
+* the second value is an array of log messages to be shown to the student
 
-TODO
+Log messages are a way that diagnostics produced during task execution can
+captured. The *public* log messages are eventually revealed to the student
+as part of the record of the outcome of a specific test.  Most task-creation
+functions have optional parameters allowing control over which information
+is made visible to students: see the
+[API documentation](file:///home/daveho/git/declarative-autograder/doc/X.html)
+for details.
+
+### Executing the test plan, Results
+
+The [X.execute\_tests]()
+function takes the rubric and test plan, and executes the test plan.
+As a result, it returns a Ruby Hash object following the schema of a
+[Gradescope `results.json` file](https://gradescope-autograders.readthedocs.io/en/latest/specs/#output-format).
+This hash has one member, accessed with the key `tests`, whose value is an
+array of test result objects.  Each test result object represents the
+result of executing the test associated with one rubric item.
+
+The results hash can be written to a JSON file using the
+[X.post\_results](https://daveho.github.io/declarative-autograder/X.html#post_results-class_method)
+function, which will produce a file called `results/results.json`.
+However, the autograder script could easily convert the data in the results
+hash to whatever format is desired.
 
 ## Writing test scripts
 
