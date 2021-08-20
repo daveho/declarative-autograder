@@ -57,26 +57,43 @@ class Rubric
   end
 end
 
-# Logger: student-visible test output is generated with log,
-# while logprivate generates output that is only visible to instructors.
-# log_cmd_output generates either public or private output,
+##
+# A Logger object is used by tasks to generate private output
+# (visible only to instructors) and public output (visible to students).
+#
+# An instance of this class is passed to each task's +call+ method
+# as the +logger+ parameter.
+#
+# Private messages are written immediately to standard output, and
+# (at least on Gradescope) are visible only to instructors.
+#
+# Public messages (visible to students) are queued, and are made
+# visible by becoming part of the next test outcome.  In general,
+# public messages should only be generated as part of test execution.
+#
+# Student-visible test output is generated with {#log},
+# while {#logprivate} generates output that is only visible to instructors.
+# {#log_cmd_output} generates either public or private output,
 # depending on the value of its visibility parameter.
 class Logger
   def initialize
     @msgs = []
   end
 
-  # Send a message to the private log visible only to instructors
+  # Send a message to the private log visible only to instructors.
+  # Private log messages are immediately written to standard output.
+  #
+  # @param msg the message to output to the private (instructor-visible) log
   def logprivate(msg)
     # Print to stdout so the message is reported to instructors by Gradescope
     puts "#{Time.now.utc}: #{msg}"
   end
 
-  # Log command output (stdout or stderr) to the reported diagnostics
-  # Parameters:
-  #   kind - what kind of output: each emitted line is prefixed with this string
-  #   output - output to log
-  #   visibility - either :public or :private
+  # Log command output (stdout or stderr) to the reported diagnostics.
+  #
+  # @param kind what kind of output: each emitted line is prefixed with this string, i.e., +'stdout'+ or +'stderr'+
+  # @param output output to log
+  # @param visibility either +:public+ or +:private+
   def log_cmd_output(kind, output, visibility)
     logfn = ->(msg) { visibility == :public ? log(msg) : logprivate(msg) }
     logfn.call("#{kind}:")
@@ -101,7 +118,8 @@ class Logger
     end
   end
 
-  # Get all logged messages (returning a copy to avoid mutation issues)
+  # Get all logged public messages (returning a copy to avoid mutation issues)
+  # @return [Array<String>] array of logged public messages
   def get_msgs
     return @msgs.clone
   end
@@ -121,11 +139,19 @@ end
 #   rubric: the rubric describing the tests
 # in general, tasks can (and should) be lambdas
 
+##
+# Public front-end namespace for the autograder framework.
 class X
+  #
   # Build an array consisting of all arguments as elements, with the
   # exception that arguments that are arrays will have their elements
   # added.  This is useful for building a large argument array
   # out of an arbitrary combination of arrays and individual values.
+  #
+  # This is exactly the same idea as list flattening in functional languages.
+  #
+  # @param [Array] args the array of values to flatten
+  # @return [Array] array containing the flattened representation of all of the non-array values in +args+
   def self.combine(*args)
     result = []
     args.each do |arg|
@@ -138,8 +164,12 @@ class X
     return result
   end
 
-  # Return list of files matching specified pattern in files directory.
-  # This is not a task, it returns a list of the files matching the pattern.
+  ##
+  # Return list of files matching specified "file glob" pattern in +files+ directory.
+  # "File glob" means "shell wildcard", and the pattern is expanded by the Unix shell.
+  # This is not a task, it returns an array of the filenamess matching the pattern.
+  # @param [String] pattern a file glob pattern, e.g., +*.c+ for all filenames ending in +.c+
+  # @return [Array<String>] array of filenames matching the file glob pattern
   def self.glob(pattern)
     result = []
     IO.popen("cd #{$files} && sh -c 'ls -d #{pattern}'") do |f|
