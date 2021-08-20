@@ -146,7 +146,7 @@ rubric items represent functional tests which will evaluate the extent to
 which the student's submission meets the functional specifications
 in the assignment description.
 
-### Tasks and task results
+### Tasks, task results, and tests
 
 A *task* is a behavior to be executed as part of the autograder.  DAF
 can create a variety of different kinds of tasks to carry out behaviors useful
@@ -170,13 +170,19 @@ X.test(:test_add, X.run('./test_calculator.sh', '5', './calc', '2 + 3'))
 
 The code above indicates that to run the `:test_add` test, the `./test_caculator.sh`
 script should be run with the arguments `5`, `./calc`, and `2 + 3`.
-If the script succeeds (exits normally with a 0 exit code), then the `X.run` task
-pushes a true outcome value, and `X.test` records the `:test_add` test as passing.
-If the script fails (exits abnormally and/or exits with a non-zero exit code),
-then `X.test` records `:test_add` as failing.  (In general, `X.test` tasks will
-consider the subordinate task to have succeeded if the most recent boolean
-value it pushed is true.  Since all tasks other than `X.inorder` tasks push only
-a single boolean value, in practice you can think of every task yielding a
+If the script succeeds (exits normally with a 0 exit code), then the
+[X.run](https://daveho.github.io/declarative-autograder/X.html#run-class_method) task
+pushes a true outcome value, and
+[X.test](https://daveho.github.io/declarative-autograder/X.html#test-class_method)
+records the `:test_add` test as passing.
+If the script fails (exits abnormally and/or exits with a non-zero exit code), then
+[X.test](https://daveho.github.io/declarative-autograder/X.html#test-class_method)
+records `:test_add` as failing.  (In general,
+[X.test](https://daveho.github.io/declarative-autograder/X.html#test-class_method)
+tasks will consider the subordinate task to have succeeded if the most recent boolean
+value it pushed is true.  Since all tasks other than
+[X.inorder](https://daveho.github.io/declarative-autograder/X.html#inorder-class_method))
+tasks push only a single boolean value, in practice you can think of every task yielding a
 single true or false value indicating whether it succeeded or failed.)
 
 Other kinds of tasks are useful for other important autograder behaviors.
@@ -199,8 +205,12 @@ tasks are implemented as Ruby lambdas.
 
 ### `X.all` and `X.inorder`
 
-Tasks such as `X.run`, `X.make`, `X.copy`, and `X.test` are the fundamental
-building blocks of an autograder.  However, the autograder will need to run
+Tasks such as
+[X.run](https://daveho.github.io/declarative-autograder/X.html#run-class_method),
+[X.make](https://daveho.github.io/declarative-autograder/X.html#make-class_method),
+[X.copy](https://daveho.github.io/declarative-autograder/X.html#copy-class_method), and
+[X.test](https://daveho.github.io/declarative-autograder/X.html#test-class_method)
+are the fundamental building blocks of an autograder.  However, the autograder will need to run
 many tasks in order to fully test and evaluate the student program.
 *Sequencing* of tasks is an important concern.  Sometimes we will want to
 make the execution of later tasks dependent on the success of earlier tasks,
@@ -211,9 +221,12 @@ and [X.inorder](https://daveho.github.io/declarative-autograder/X.html#inorder-c
 provide mechanisms to create [composite](https://en.wikipedia.org/wiki/Composite_pattern)
 tasks comprised of a sequence of lower-level tasks.
 
-The `X.all` task executes a series of consitutent tasks in order. Later tasks
-are only executed if all previous tasks completed successfully.  So, `X.all` is
-very useful for specifying prerequisites which must complete successfully before
+The
+[X.all](https://daveho.github.io/declarative-autograder/X.html#all-class_method)
+task executes a series of consitutent tasks in order. Later tasks
+are only executed if all previous tasks completed successfully.  So,
+[X.all](https://daveho.github.io/declarative-autograder/X.html#all-class_method)
+is very useful for specifying prerequisites which must complete successfully before
 later tasks can be attempted.  For example, before running tests on a student
 program, test files must be copied, and the program must be compiled:
 
@@ -235,9 +248,13 @@ In the above example, we don't want to attempt running tests unless all files
 needed for testing (inputs, expected outputs, and test scripts) have been
 copied successfully, and the student program has been compiled successfully.
 
-The `X.inorder` task executes a series of tasks, but later tasks are attempted
+The
+[X.inorder](https://daveho.github.io/declarative-autograder/X.html#inorder-class_method) 
+task executes a series of tasks, but later tasks are attempted
 regardless of whether or not previous tasks succeeded.  The core of an autograder
-is typically an `X.inorder` task which executes all of the functional tests associated
+is typically an
+[X.inorder](https://daveho.github.io/declarative-autograder/X.html#inorder-class_method) 
+task which executes all of the functional tests associated
 with rubric items.  To elaborate the example above:
 
 ```ruby
@@ -260,13 +277,26 @@ X.all(
 )
 ```
 
-As you can see, the `X.all` and `X.inorder` tasks provide complete flexibility in
-determining which tasks are executed.  The `X.all` task shown above could form the
-*test plan* for an autograder.
+As you can see, the
+[X.all](https://daveho.github.io/declarative-autograder/X.html#all-class_method)
+and
+[X.inorder](https://daveho.github.io/declarative-autograder/X.html#inorder-class_method) 
+tasks provide complete flexibility in determining which tasks are executed.  The
+[X.all](https://daveho.github.io/declarative-autograder/X.html#all-class_method)
+task shown above could form the *test plan* for an autograder.
 
-### Tests, test outcomes, and the test plan
+### Test plan, test outcomes
 
-TODO
+As hinted in the section above, a *test plan* is simply a task which, when
+executed, will carry out all of the subordinate tasks needed to test and
+evaluate the submitted student program.  The test plan is typically created using
+[X.all](https://daveho.github.io/declarative-autograder/X.html#all-class_method)
+so that the successful completion of mandatory prerequisite tasks
+can be guaranteed before functional tests are executed.
+
+<!--
+As `X.test`
+-->
 
 ### Results
 
@@ -276,5 +306,6 @@ TODO
 
 TODO
 
+## Putting it all together
 
 TODO
