@@ -385,9 +385,15 @@ class X
     end
   end
 
+  # Wrapper class to give a predicate function object (i.e., lambda) a +desc+
+  # method which returns a human-readable description string.
+  # This is useful for autograders which use {eval_pred}, so that the
+  # application and result of the predicate can be logged in a meaningful way.
   class Pred
     attr_accessor :pred_func, :desc
 
+    # @param pred_func a predicate function (e..g, a lambda returning a boolean value)
+    # @param [String] desc a description of the predicate, e.g. "determine if all unit tests passed"
     def initialize(pred_func, desc)
       @pred_func = pred_func
       @desc = desc
@@ -405,6 +411,9 @@ class X
   # a predicate is preferred to just using a lambda because it allows
   # the task to generate a meaningful student-visible log message
   # describing what the predicate is evaluating.
+  #
+  # @param pred_func a predicate function (e..g, a lambda returning a boolean value)
+  # @param [String] desc a description of the predicate, e.g. "determine if all unit tests passed"
   def self.pred(pred_func, desc)
     return Pred.new(pred_func, desc)
   end
@@ -421,7 +430,8 @@ class X
   # which will allow it to have a meaningful description that can be
   # logged.
   #
-  # Options:
+  # @param pred a predicate function (ideally, an instance of {Pred})
+  # @param report_desc if true, evaluation and result of preddicate are publicly logged
   def self.eval_pred(pred, report_desc: true, report_outcome: true)
     return ->(outcomes, results, logger, rubric) do
       if pred.respond_to?(:desc) && report_desc
@@ -436,10 +446,16 @@ class X
   end
 
   # Check whether a test passed.
-  # Requires that the results map is available.
+  # Requires that the results map is available, and contains a
+  # recorded score for the named test.
   # This can be called from within a predicate function,
   # since the results map will be (at least partially) available by
-  # that time.
+  # that time.  A test is assumed to have passed if its score is
+  # greater than 0.
+  #
+  # @param [Symbol] testname the testname to inquire about
+  # @param [Hash] results the results map (map of testnames to evaluated numeric scores)
+  # @return [Boolean] true if the test passed, false if the test failed
   def self.test_passed(testname, results)
     if !results.has_key?(testname)
       return false
@@ -448,8 +464,16 @@ class X
     return result_pair[0] >= 1.0
   end
 
-  # Run a task as a test.
-  # The success or failure of the test will be reported.
+  # Return a task which executes a test by invoking the specified task and determining whether
+  # its outcome was successful or unsuccessful.
+  # The success or failure of the test will be reported
+  # by being entered in the results map.
+  #
+  # @param [Symbol] testname the testname of the test to execute (which should have
+  #                          a corresponding rubric item!)
+  # @param task task the task to execute: its success or failure determines whether the
+  #                  test passes or fails
+  # @return the task object
   def self.test(testname, task)
     return ->(outcomes, results, logger, rubric) do
       logger.log("Executing test: #{rubric.get_desc(testname)}")
@@ -466,12 +490,30 @@ class X
     end
   end
 
-  # Execute all tasks in sequence, auto-failing any tasks that follow
-  # a failed task. A single outcome is reported: true if all tasks succeeded,
+  # Return a task which executes all tasks in sequence, auto-failing any tasks that follow
+  # a failed task. This is useful for ensuring that prerequisite tasks execute successfully
+  # before dependent tasks run.
+  #
+  # Example:
+  #
+  #     # make the_program, and if successful, base the outcome of the
+  #     # :program_runs test on whether or not it runs successfully
+  #     X.all(X.make('the_program'),
+  #           X.test(:program_runs, X.run('./the_program')))
+  #
+  # In the example above, if the +X.make+ task fails (e.g., because of
+  # a compilation error), then the +X.test+ task is automatically considered to
+  # have failed.
+  #
+  # When the failure of a task causes subsequent tasks to fail, a message
+  # of the form "Task failed, not executing subsequent tasks" will be logged,
+  # unless the +report_failure+ parameter is specified as false.
+  #
+  # A single outcome is reported: true if all tasks succeeded,
   # false if any tasks failed.
   #
-  # Options:
-  #   report_failure: if true, report if a task failure will suppress further tasks (defaults to true)
+  # @param [Boolean] report_failure if true, report if a task failure will suppress further tasks (defaults to true)
+  # @return the task object
   def self.all(*tasks, report_failure: true)
     return ->(outcomes, results, logger, rubric) do
       task_outcomes = []

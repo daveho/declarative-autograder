@@ -67,6 +67,7 @@ autograder2.rb
 files/
     input_1.txt
     expected_output_1.txt
+    run_program.sh
     ...etc...
 ```
 
@@ -80,6 +81,7 @@ autograder2.rb
 files/
     input_1.txt
     expected_output_1.txt
+    run_program.sh
     ...etc...
 submission/
     program.c
@@ -98,6 +100,7 @@ source/
     files/
         input_1.txt
         expected_output_1.txt
+        run_program.sh
         ...etc...
 submission/
     program.c
@@ -115,7 +118,7 @@ TODO
 
 TODO
 
-### Tasks
+### Tasks and task results
 
 TODO
 
@@ -123,7 +126,7 @@ TODO
 
 TODO
 
-### Tests and test outcomes
+### Tests, test outcomes, and the test plan
 
 TODO
 
