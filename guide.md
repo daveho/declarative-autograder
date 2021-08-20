@@ -175,7 +175,7 @@ pushes a true outcome value, and `X.test` records the `:test_add` test as passin
 If the script fails (exits abnormally and/or exits with a non-zero exit code),
 then `X.test` records `:test_add` as failing.  (In general, `X.test` tasks will
 consider the subordinate task to have succeeded if the most recent boolean
-value pushed is true.  Since all tasks other than `X.inorder` tasks push only
+value it pushed is true.  Since all tasks other than `X.inorder` tasks push only
 a single boolean value, in practice you can think of every task yielding a
 single true or false value indicating whether it succeeded or failed.)
 
@@ -199,7 +199,68 @@ tasks are implemented as Ruby lambdas.
 
 ### `X.all` and `X.inorder`
 
-TODO
+Tasks such as `X.run`, `X.make`, `X.copy`, and `X.test` are the fundamental
+building blocks of an autograder.  However, the autograder will need to run
+many tasks in order to fully test and evaluate the student program.
+*Sequencing* of tasks is an important concern.  Sometimes we will want to
+make the execution of later tasks dependent on the success of earlier tasks,
+and sometimes we will want to execute a number of tests independently.
+
+[X.all](https://daveho.github.io/declarative-autograder/X.html#all-class_method)
+and [X.inorder](https://daveho.github.io/declarative-autograder/X.html#inorder-class_method) 
+provide mechanisms to create [composite](https://en.wikipedia.org/wiki/Composite_pattern)
+tasks comprised of a sequence of lower-level tasks.
+
+The `X.all` task executes a series of consitutent tasks in order. Later tasks
+are only executed if all previous tasks completed successfully.  So, `X.all` is
+very useful for specifying prerequisites which must complete successfully before
+later tasks can be attempted.  For example, before running tests on a student
+program, test files must be copied, and the program must be compiled:
+
+```ruby
+X.all(
+  # copy required test files
+  X.copy('input_1.txt',
+         'input_2.txt',
+         'expected_output_1.txt'
+         'expected_output_2.txt',
+         'run_program.sh'),
+  # compile the student program
+  X.test(:make_succeeds, X.make('program')),
+  # ...now the tests can be executed...
+)
+```
+
+In the above example, we don't want to attempt running tests unless all files
+needed for testing (inputs, expected outputs, and test scripts) have been
+copied successfully, and the student program has been compiled successfully.
+
+The `X.inorder` task executes a series of tasks, but later tasks are attempted
+regardless of whether or not previous tasks succeeded.  The core of an autograder
+is typically an `X.inorder` task which executes all of the functional tests associated
+with rubric items.  To elaborate the example above:
+
+```ruby
+X.all(
+  # copy required test files
+  X.copy('input_1.txt',
+         'input_2.txt',
+         'expected_output_1.txt'
+         'expected_output_2.txt',
+         'run_program.sh'),
+  # compile the student program
+  X.test(:make_succeeds, X.make('program')),
+  # execute the tests against the student program
+  X.inorder(
+    X.test(:test_case_1, X.run('./run_program.sh', './program', 'input_1.txt', 'expected_output_1.txt')),
+    X.test(:test_case_2, X.run('./run_program.sh', './program', 'input_2.txt', 'expected_output_2.txt')),
+  ),
+)
+```
+
+As you can see, the `X.all` and `X.inorder` tasks provide complete flexibility in
+determining which tasks are executed.  The `X.all` task shown above could form the
+*test plan* for an autograder.
 
 ### Tests, test outcomes, and the test plan
 
