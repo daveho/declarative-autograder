@@ -252,8 +252,10 @@ X.all(
   X.test(:make_succeeds, X.make('program')),
   # execute the tests against the student program
   X.inorder(
-    X.test(:test_case_1, X.run('./run_program.sh', './program', 'input_1.txt', 'expected_output_1.txt')),
-    X.test(:test_case_2, X.run('./run_program.sh', './program', 'input_2.txt', 'expected_output_2.txt')),
+    X.test(:test_case_1, X.run('./run_program.sh', './program',
+                               'input_1.txt', 'expected_output_1.txt')),
+    X.test(:test_case_2, X.run('./run_program.sh', './program',
+                               'input_2.txt', 'expected_output_2.txt')),
   ),
 )
 ```
