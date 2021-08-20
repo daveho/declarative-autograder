@@ -112,11 +112,33 @@ DAF is designed to allow either of these runtime configurations to work.
 
 ## Concepts
 
-TODO
+This section explains the fundamental concepts involved in using DAF to implement an
+autograder.
 
 ### Rubric
 
-TODO
+A *rubric* is a list of *rubric items*.  Each rubric item specifies a *testname*,
+*description*, and *points*.  Both the rubric and its rubric items are represented
+as Ruby arrays.
+
+Specifying a rubric is probably the first thing you will do when writing an
+autograder script.  Example:
+
+```ruby
+rubric = [
+  [:make_succeeds, "Make successfully compiles the program", 5.0],
+  [:test1, "First program test", 10.0],
+  [:test2, "Second program test", 10.0],
+  [:test3, "Third program tes", 5.0],
+]
+```
+
+The rubric above specifies four rubric items, worth a total of 30 points.
+The `:make_succeeds` rubric item represents the requirement that the student
+program compile successfully using make.  The `:test1`, `:test2`, and `:test3`
+rubric items represent functional tests which will evaluate the extent to
+which the student's submission meets the functional specifications
+in the assignment description.
 
 ### Tasks and task results
 
