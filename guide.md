@@ -3,10 +3,11 @@
 This document explains the concepts and techniques needed to use the
 [Declarative Autograder Framework](https://github.com/daveho/declarative-autograder).
 
-In addition to reading this guide document, you should also look at
-the autograder examples (TODO: link to examples), since they show
-how these concepts and techniques are applied in practice.
-
+From a practical standpoint, looking at the examples (TODO: link to
+examples) is probably the best place to start for learning how to
+use DAF to implement autograders.  However, the content in
+this document is important if you want to really understand how
+DAF autograders are put together.
 
 ## Background, philosophy
 
@@ -27,7 +28,7 @@ support for CS classes.  The declarative autograder framework (DAF) is designed 
 integrate with Gradescope, although there is nothing to prevent its use as
 a standalone tool, or to prevent it from being integrated with other autograder platforms.
 
-If you've ever tried to write an autograder, then you're probably aware that
+If you've ever written an autograder, then you're probably aware that
 autograder programs and scripts can easily become complex and hard to work with.
 This is where DAF comes in: it is intended to make autograder scripts easy
 to write.
