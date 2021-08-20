@@ -104,6 +104,8 @@
     
 <p>Public front-end namespace for the autograder framework.</p>
 
+<p>The name “X” has no significance. It was chosen to be as concise as possible, in order to make <code>run_autograder</code> scripts as noise-free as possible.</p>
+
 
   </div>
 </div>
@@ -152,7 +154,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Private method to check a testname to determine whether it specifies a hidden or visible test.</p>
+</div></span>
   
 </li>
 
@@ -175,7 +179,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Execute all tasks in sequence, auto-failing any tasks that follow a failed task.</p>
+<p>Return a task which executes all tasks in sequence, auto-failing any tasks that follow a failed task.</p>
 </div></span>
   
 </li>
@@ -352,7 +356,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#execute_tests-class_method" title="execute_tests (class method)">.<strong>execute_tests</strong>(rubric, plan)  &#x21d2; Object </a>
+      <a href="#execute_tests-class_method" title="execute_tests (class method)">.<strong>execute_tests</strong>(rubric, plan)  &#x21d2; Hash </a>
     
 
     
@@ -367,7 +371,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Execute the tests and return a hash that can be converted into a results JSON file.</p>
+<p>Execute the tests and return a hash that can be converted into a results JSON file, using the correct schema for a Gradescope <code>results.json</code>.</p>
 </div></span>
   
 </li>
@@ -391,7 +395,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Execute one task and expect it to fail.</p>
+<p>Return a task which execute one specified task and expects it to fail.</p>
 </div></span>
   
 </li>
@@ -439,7 +443,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Execute all tasks in sequence and record their outcomes.</p>
+<p>Return a task which executes a sequence of tasks and records their outcomes.</p>
 </div></span>
   
 </li>
@@ -487,7 +491,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Execute all tasks in sequence and record their outcomes, but change all of the outcomes to true, creating the illusion that all tests succeed even if they didn&#39;t.</p>
+<p>Return a task which executes all tasks in sequence and pushes their outcomes, but changes all of the outcomes to true, creating the illusion that all tests succeed even if they didn&#39;t.</p>
 </div></span>
   
 </li>
@@ -558,7 +562,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Internal method to create a result object for an executed test.</p>
+</div></span>
   
 </li>
 
@@ -580,7 +586,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Internal method to return a result object for a testname that is missing from the results map.</p>
+</div></span>
   
 </li>
 
@@ -627,7 +635,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Run a task as a test.</p>
+<p>Return a task which executes a test by invoking the specified task and determining whether its outcome was successful or unsuccessful.</p>
 </div></span>
   
 </li>
@@ -636,7 +644,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#test_passed-class_method" title="test_passed (class method)">.<strong>test_passed</strong>(testname, results)  &#x21d2; Object </a>
+      <a href="#test_passed-class_method" title="test_passed (class method)">.<strong>test_passed</strong>(testname, results)  &#x21d2; Boolean </a>
     
 
     
@@ -675,18 +683,67 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Private method to check a testname to determine whether it specifies a hidden or visible test.  Hidden tests are specified by testnames ending with <code>_hidden</code>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>testname</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the testname to check</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'>
+<p>true if the testname indicates a hidden test, false if it indicates a visible test</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-537
-538
-539</pre>
+611
+612
+613</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 537</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 611</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid__visibility_of'>_visibility_of</span><span class='lparen'>(</span><span class='id identifier rubyid_testname'>testname</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_testname'>testname</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_end_with?'>end_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>_hidden</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>hidden</span><span class='tstring_end'>&#39;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>visible</span><span class='tstring_end'>&#39;</span></span>
@@ -708,18 +765,83 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Execute all tasks in sequence, auto-failing any tasks that follow a failed task. A single outcome is reported: true if all tasks succeeded, false if any tasks failed.</p>
+<p>Return a task which executes all tasks in sequence, auto-failing any tasks that follow a failed task. This is useful for ensuring that prerequisite tasks execute successfully before dependent tasks run.</p>
 
-<p>Options:</p>
+<p>Example:</p>
 
-<pre class="code ruby"><code class="ruby">report_failure: if true, report if a task failure will suppress further tasks (defaults to true)
+<pre class="code ruby"><code class="ruby"><span class='comment'># make the_program, and if successful, base the outcome of the
+</span><span class='comment'># :program_runs test on whether or not it runs successfully
+</span><span class='const'><span class='object_link'><a href="" title="X (class)">X</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="X (class)">X</a></span></span><span class='period'>.</span><span class='id identifier rubyid_make'><span class='object_link'><a href="#make-class_method" title="X.make (method)">make</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>the_program</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+      <span class='const'><span class='object_link'><a href="" title="X (class)">X</a></span></span><span class='period'>.</span><span class='id identifier rubyid_test'><span class='object_link'><a href="#test-class_method" title="X.test (method)">test</a></span></span><span class='lparen'>(</span><span class='symbol'>:program_runs</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="" title="X (class)">X</a></span></span><span class='period'>.</span><span class='id identifier rubyid_run'><span class='object_link'><a href="#run-class_method" title="X.run (method)">run</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>./the_program</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span>
 </code></pre>
+
+<p>In the example above, if the <code>X.make</code> task fails (e.g., because of a compilation error), then the <code>X.test</code> task is automatically considered to have failed.</p>
+
+<p>When the failure of a task causes subsequent tasks to fail, a message of the form “Task failed, not executing subsequent tasks” will be logged, unless the <code>report_failure</code> parameter is specified as false.</p>
+
+<p>A single outcome is pushed: true if all tasks succeeded, false if any tasks failed.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>tasks</span>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the sequence of tasks</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>report_failure</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if true, report if a task failure will suppress further tasks (defaults to true)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'>
+<p>the task object</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -727,39 +849,39 @@
       <pre class="lines">
 
 
-475
-476
-477
-478
-479
-480
-481
-482
-483
-484
-485
-486
-487
-488
-489
-490
-491
-492
-493
-494
-495
-496
-497
-498
-499
-500
-501
-502
-503
-504</pre>
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 475</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 520</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_tasks'>tasks</span><span class='comma'>,</span> <span class='label'>report_failure:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span> <span class='kw'>do</span>
@@ -896,9 +1018,6 @@
       <pre class="lines">
 
 
-257
-258
-259
 260
 261
 262
@@ -912,10 +1031,13 @@
 270
 271
 272
-273</pre>
+273
+274
+275
+276</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 257</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 260</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_check'>check</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_filenames'>filenames</span><span class='comma'>,</span> <span class='label'>check_exe:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>subdir:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span> <span class='kw'>do</span>
@@ -1021,12 +1143,12 @@
       <pre class="lines">
 
 
-281
-282
-283</pre>
+284
+285
+286</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 281</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 284</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_check_exe'>check_exe</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_filenames'>filenames</span><span class='comma'>,</span> <span class='label'>subdir:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_check'>check</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_filenames'>filenames</span><span class='comma'>,</span> <span class='label'>check_exe:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>subdir:</span> <span class='id identifier rubyid_subdir'>subdir</span><span class='rparen'>)</span>
@@ -1063,12 +1185,12 @@
       <pre class="lines">
 
 
-286
-287
-288</pre>
+289
+290
+291</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 286</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 289</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_checkExe'>checkExe</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_filenames'>filenames</span><span class='comma'>,</span> <span class='label'>subdir:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_check_exe'>check_exe</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_filenames'>filenames</span><span class='comma'>,</span> <span class='label'>subdir:</span> <span class='id identifier rubyid_subdir'>subdir</span><span class='rparen'>)</span>
@@ -1142,9 +1264,6 @@
       <pre class="lines">
 
 
-175
-176
-177
 178
 179
 180
@@ -1152,10 +1271,13 @@
 182
 183
 184
-185</pre>
+185
+186
+187
+188</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 175</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 178</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_combine'>combine</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1255,9 +1377,6 @@
       <pre class="lines">
 
 
-211
-212
-213
 214
 215
 216
@@ -1272,10 +1391,13 @@
 225
 226
 227
-228</pre>
+228
+229
+230
+231</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 211</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 214</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_copy'>copy</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='label'>subdir:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>report_command:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Internal error: no file specified to copy</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_files'>files</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -1346,9 +1468,6 @@
       <pre class="lines">
 
 
-233
-234
-235
 236
 237
 238
@@ -1361,10 +1480,13 @@
 245
 246
 247
-248</pre>
+248
+249
+250
+251</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 233</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 236</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_copydir'>copydir</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_dirnames'>dirnames</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Internal error: no directory specified to copy</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_dirnames'>dirnames</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -1401,13 +1523,49 @@
     
 <p>A task that evaluates a predicate and produces an outcome based on the result (true or false) of that predicate. This is useful for “synthetic” tests, i.e., ones whose outcomes aren&#39;t based by executing student code, but instead are evaluated by other criteria.  The “pred” parameter must have a “call” function which takes one parameter — the results map, which allows the predicate to know whether previous tests have passed or failed — and returns true or false. Suggestion: use the “pred” function to create the predicate, which will allow it to have a meaningful description that can be logged.</p>
 
-<p>Options:</p>
-
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>pred</span>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a predicate function (ideally, an instance of <span class='object_link'><a href="X/Pred.html" title="X::Pred (class)">Pred</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>report_desc</span>
+      
+      
+        <span class='type'></span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if true, evaluation and result of preddicate are publicly logged</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -1415,21 +1573,21 @@
       <pre class="lines">
 
 
-425
-426
-427
-428
-429
-430
-431
-432
-433
-434
-435
-436</pre>
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 425</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 438</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_eval_pred'>eval_pred</span><span class='lparen'>(</span><span class='id identifier rubyid_pred'>pred</span><span class='comma'>,</span> <span class='label'>report_desc:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>report_outcome:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span> <span class='kw'>do</span>
@@ -1451,7 +1609,7 @@
       <div class="method_details ">
   <h3 class="signature " id="execute_tests-class_method">
   
-    .<strong>execute_tests</strong>(rubric, plan)  &#x21d2; <tt>Object</tt> 
+    .<strong>execute_tests</strong>(rubric, plan)  &#x21d2; <tt>Hash</tt> 
   
 
   
@@ -1460,13 +1618,67 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Execute the tests and return a hash that can be converted into a results JSON file</p>
+<p>Execute the tests and return a hash that can be converted into a results JSON file, using the correct schema for a Gradescope <code>results.json</code>. This the method which actually executes the test plan and produces the autograder results.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>rubric</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the rubric, which is an array of rubric items (see the documentation for the <span class='object_link'><a href="Rubric.html" title="Rubric (class)">Rubric</a></span> class)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>plan</span>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a task to execute as the overall test plan: this will usually be created using the <span class='object_link'><a href="#all-class_method" title="X.all (method)">all</a></span> method, since prerequisite tasks will generally need to complete successfully before any actual testing of the student program can proceed</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a hash in Gradescope <code>results.json</code> format with the results of executing the autograder</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -1474,37 +1686,37 @@
       <pre class="lines">
 
 
-563
-564
-565
-566
-567
-568
-569
-570
-571
-572
-573
-574
-575
-576
-577
-578
-579
-580
-581
-582
-583
-584
-585
-586
-587
-588
-589
-590</pre>
+667
+668
+669
+670
+671
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 563</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 667</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_execute_tests'>execute_tests</span><span class='lparen'>(</span><span class='id identifier rubyid_rubric'>rubric</span><span class='comma'>,</span> <span class='id identifier rubyid_plan'>plan</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_rubric'>rubric</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Rubric.html" title="Rubric (class)">Rubric</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rubric.html#initialize-instance_method" title="Rubric#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span>
@@ -1551,13 +1763,51 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Execute one task and expect it to fail. The “inverted” task succeeds if the original task fails, and vice versa.</p>
+<p>Return a task which execute one specified task and expects it to fail. The “inverted” task succeeds if the original task fails, and vice versa.  This can be useful for testing error handling: i.e., a test sends an erroneous input to a program, and expects the program to report the error by exiting with a non-zero exit code, which is considered a “failed” execution by <span class='object_link'><a href="#run-class_method" title="X.run (method)">run</a></span>.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>task</span>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the task to invert</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'>
+<p>the task object</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -1565,15 +1815,15 @@
       <pre class="lines">
 
 
-530
-531
-532
-533
-534
-535</pre>
+598
+599
+600
+601
+602
+603</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 530</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 598</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_expectfail'>expectfail</span><span class='lparen'>(</span><span class='id identifier rubyid_task'>task</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span> <span class='kw'>do</span>
@@ -1650,19 +1900,19 @@
       <pre class="lines">
 
 
-193
-194
-195
 196
 197
 198
 199
 200
 201
-202</pre>
+202
+203
+204
+205</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 193</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 196</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='id identifier rubyid_pattern'>pattern</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1691,13 +1941,55 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Execute all tasks in sequence and record their outcomes.</p>
+<p>Return a task which executes a sequence of tasks and records their outcomes. Tasks can pass or fail completely independently: i.e., if an earlier task fails, the execution of subsequent tasks will still be attempted.</p>
+
+<p>This is very useful for executing tests, where the failure of an earlier test should not prevent a later test from being attempted.</p>
+
+<p>Pushes all of the outcomes generated by all of the executed tasks.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>tasks</span>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the sequence of tasks</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'>
+<p>the task object</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -1705,16 +1997,16 @@
       <pre class="lines">
 
 
-507
-508
-509
-510
-511
-512
-513</pre>
+562
+563
+564
+565
+566
+567
+568</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 507</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 562</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_inorder'>inorder</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_tasks'>tasks</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span> <span class='kw'>do</span>
@@ -1810,9 +2102,6 @@
       <pre class="lines">
 
 
-298
-299
-300
 301
 302
 303
@@ -1835,10 +2124,13 @@
 320
 321
 322
-323</pre>
+323
+324
+325
+326</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 298</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 301</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_make'>make</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_makeargs'>makeargs</span><span class='comma'>,</span> <span class='label'>subdir:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span> <span class='kw'>do</span>
@@ -1883,13 +2175,51 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Execute all tasks in sequence and record their outcomes, but change all of the outcomes to true, creating the illusion that all tests succeed even if they didn&#39;t.</p>
+<p>Return a task which executes all tasks in sequence and pushes their outcomes, but changes all of the outcomes to true, creating the illusion that all tests succeed even if they didn&#39;t.  So, the returned task works very much like one created by <span class='object_link'><a href="#inorder-class_method" title="X.inorder (method)">inorder</a></span>, but where all of the generated outcomes are guaranteed to be true.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>tasks</span>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the sequence of tasks</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'>
+<p>the task object</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -1897,24 +2227,28 @@
       <pre class="lines">
 
 
-518
-519
-520
-521
-522
-523
-524
-525</pre>
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 518</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 578</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_nofail'>nofail</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_tasks'>tasks</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_task_outcomes'>task_outcomes</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_tasks'>tasks</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_task'>task</span><span class='op'>|</span>
-      <span class='id identifier rubyid_task'>task</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_task'>task</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_task_outcomes'>task_outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
-    <span class='id identifier rubyid_outcomes'>outcomes</span><span class='period'>.</span><span class='id identifier rubyid_map!'>map!</span> <span class='lbrace'>{</span> <span class='kw'>true</span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_task_outcomes'>task_outcomes</span><span class='period'>.</span><span class='id identifier rubyid_map!'>map!</span> <span class='lbrace'>{</span> <span class='kw'>true</span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_outcomes'>outcomes</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='id identifier rubyid_task_outcomes'>task_outcomes</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1948,15 +2282,15 @@
       <pre class="lines">
 
 
-594
-595
-596
-597
-598
-599</pre>
+698
+699
+700
+701
+702
+703</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 594</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 698</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_post_results'>post_results</span><span class='lparen'>(</span><span class='id identifier rubyid_results_json'>results_json</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_system'>system</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>mkdir -p results</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
@@ -1987,7 +2321,43 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>pred_func</span>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a predicate function (e..g, a lambda returning a boolean value)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>desc</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a description of the predicate, e.g. “determine if all unit tests passed”</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -1995,12 +2365,12 @@
       <pre class="lines">
 
 
-408
-409
-410</pre>
+420
+421
+422</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 408</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 420</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pred'>pred</span><span class='lparen'>(</span><span class='id identifier rubyid_pred_func'>pred_func</span><span class='comma'>,</span> <span class='id identifier rubyid_desc'>desc</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="X/Pred.html" title="X::Pred (class)">Pred</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="X/Pred.html#initialize-instance_method" title="X::Pred#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_pred_func'>pred_func</span><span class='comma'>,</span> <span class='id identifier rubyid_desc'>desc</span><span class='rparen'>)</span>
@@ -2019,24 +2389,103 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Internal method to create a result object for an executed test.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>testname</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the testname missing from the results map</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>desc</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the test description from the rubric</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>maxscore</span>
+      
+      
+        <span class='type'>(<tt>Number</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the maximum score possible for the rubric item</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>outcome_pair</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a two element array: the first element is a 1 or 0 indicating whether the test passed or failed, and the second element is an array of public log messages to be reported to the student</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-551
-552
-553
-554
-555
-556
-557
-558
-559</pre>
+644
+645
+646
+647
+648
+649
+650
+651
+652</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 551</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 644</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_result_obj'>result_obj</span><span class='lparen'>(</span><span class='id identifier rubyid_testname'>testname</span><span class='comma'>,</span> <span class='id identifier rubyid_desc'>desc</span><span class='comma'>,</span> <span class='id identifier rubyid_maxscore'>maxscore</span><span class='comma'>,</span> <span class='id identifier rubyid_outcome_pair'>outcome_pair</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='lbrace'>{</span>
@@ -2061,24 +2510,89 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Internal method to return a result object for a testname that is missing from the results map. Typically, a test with no result was not executed because a prerequisite step (in a task created by <span class='object_link'><a href="#all-class_method" title="X.all (method)">all</a></span>) failed, preventing the execution of a subsquent test. The result object will specify a score of 0.0 for the affected test.</p>
+
+<p>Autograders should not need to call this method directly.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>testname</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the testname missing from the results map</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>desc</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the test description from the rubric</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>maxscore</span>
+      
+      
+        <span class='type'>(<tt>Number</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the maximum score possible for the rubric item</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-541
-542
-543
-544
-545
-546
-547
-548
-549</pre>
+625
+626
+627
+628
+629
+630
+631
+632
+633</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 541</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 625</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_result_obj_for_missing_test'>result_obj_for_missing_test</span><span class='lparen'>(</span><span class='id identifier rubyid_testname'>testname</span><span class='comma'>,</span> <span class='id identifier rubyid_desc'>desc</span><span class='comma'>,</span> <span class='id identifier rubyid_maxscore'>maxscore</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='lbrace'>{</span>
@@ -2340,9 +2854,6 @@
       <pre class="lines">
 
 
-347
-348
-349
 350
 351
 352
@@ -2379,10 +2890,13 @@
 383
 384
 385
-386</pre>
+386
+387
+388
+389</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 347</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 350</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_run'>run</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_cmd'>cmd</span><span class='comma'>,</span>
              <span class='label'>timeout:</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#DEFAULT_TIMEOUT-constant" title="DEFAULT_TIMEOUT (constant)">DEFAULT_TIMEOUT</a></span></span><span class='comma'>,</span>
@@ -2441,13 +2955,67 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Run a task as a test. The success or failure of the test will be reported.</p>
+<p>Return a task which executes a test by invoking the specified task and determining whether its outcome was successful or unsuccessful. The success or failure of the test will be reported by being entered in the results map.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>testname</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the testname of the test to execute (which should have a corresponding rubric item!)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>task</span>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>task the task to execute: its success or failure determines whether the test passes or fails</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'>
+<p>the task object</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -2455,24 +3023,24 @@
       <pre class="lines">
 
 
-453
-454
-455
-456
-457
-458
-459
-460
-461
-462
-463
-464
-465
-466
-467</pre>
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 453</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 479</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_test'>test</span><span class='lparen'>(</span><span class='id identifier rubyid_testname'>testname</span><span class='comma'>,</span> <span class='id identifier rubyid_task'>task</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span> <span class='kw'>do</span>
@@ -2497,7 +3065,7 @@
       <div class="method_details ">
   <h3 class="signature " id="test_passed-class_method">
   
-    .<strong>test_passed</strong>(testname, results)  &#x21d2; <tt>Object</tt> 
+    .<strong>test_passed</strong>(testname, results)  &#x21d2; <tt>Boolean</tt> 
   
 
   
@@ -2506,13 +3074,67 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Check whether a test passed. Requires that the results map is available. This can be called from within a predicate function, since the results map will be (at least partially) available by that time.</p>
+<p>Check whether a test passed. Requires that the results map is available, and contains a recorded result (0 for failure, 1 for success) for the named test. This can be called from within a predicate function, since the results map will be (at least partially) available by that time.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>testname</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the testname to inquire about</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>results</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the results map (map of testnames to evaluated numeric scores)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>true if the test passed, false if the test failed</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -2520,16 +3142,16 @@
       <pre class="lines">
 
 
-443
-444
-445
-446
-447
-448
-449</pre>
+461
+462
+463
+464
+465
+466
+467</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 443</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 461</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_test_passed'>test_passed</span><span class='lparen'>(</span><span class='id identifier rubyid_testname'>testname</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span><span class='lparen'>(</span><span class='id identifier rubyid_testname'>testname</span><span class='rparen'>)</span>
@@ -2548,7 +3170,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Aug 20 09:51:06 2021 by
+  Generated on Fri Aug 20 12:49:44 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.4).
 </div>

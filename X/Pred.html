@@ -99,7 +99,18 @@
   
 </div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Wrapper class to give a predicate function object (i.e., lambda) a <code>desc</code> method which returns a human-readable description string. This is useful for autograders which use <span class='object_link'><a href="../X.html#eval_pred-class_method" title="X.eval_pred (method)">eval_pred</a></span>, so that the application and result of the predicate can be logged in a meaningful way.</p>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -245,7 +256,43 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>pred_func</span>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a predicate function (e..g, a lambda returning a boolean value)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>desc</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a description of the predicate, e.g. “determine if all unit tests passed”</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -253,13 +300,13 @@
       <pre class="lines">
 
 
-391
-392
-393
-394</pre>
+400
+401
+402
+403</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 391</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 400</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_pred_func'>pred_func</span><span class='comma'>,</span> <span class='id identifier rubyid_desc'>desc</span><span class='rparen'>)</span>
   <span class='ivar'>@pred_func</span> <span class='op'>=</span> <span class='id identifier rubyid_pred_func'>pred_func</span>
@@ -303,12 +350,12 @@
       <pre class="lines">
 
 
-389
-390
-391</pre>
+396
+397
+398</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 389</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 396</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_desc'>desc</span>
   <span class='ivar'>@desc</span>
@@ -346,12 +393,12 @@
       <pre class="lines">
 
 
-389
-390
-391</pre>
+396
+397
+398</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 389</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 396</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pred_func'>pred_func</span>
   <span class='ivar'>@pred_func</span>
@@ -383,12 +430,12 @@
       <pre class="lines">
 
 
-396
-397
-398</pre>
+405
+406
+407</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 396</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 405</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='ivar'>@pred_func</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -403,7 +450,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Aug 20 09:51:06 2021 by
+  Generated on Fri Aug 20 12:49:44 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.4).
 </div>
