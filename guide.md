@@ -1,13 +1,13 @@
 # Guide to using the declarative autograder framework (DAF)
 
 This document explains the concepts and techniques needed to use the
-[declarative autograder framework](https://github.com/daveho/declarative-autograder).
+[Declarative Autograder Framework](https://github.com/daveho/declarative-autograder).
 
 ## Background, philosophy
 
 An *autograder* is a program that tests student code and generates a
 grade.  Usually, the testing is for functional correctness, meaning some
-combination of unit tests and system tests were the program is fed
+combination of unit tests and system tests where the program is fed
 test inputs and the program output is compared to expected output.
 However, it is possible to incorporate non-functional tests such as style
 checking into an autograder.
@@ -87,7 +87,8 @@ submission/
     ...etc...
 ```
 
-Because Gradescope's autograder feature moves files around, when a student code submission
+Because [Gradescope's autograder feature](https://gradescope-autograders.readthedocs.io/en/latest/specs/)
+moves files around, when a student code submission
 is tested on Gradescope, the environment will look something like this:
 
 ```
