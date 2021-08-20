@@ -18,7 +18,7 @@ The code is distributed under the MIT license.  Comments to <mailto:david.hoveme
 
 ## Documentation
 
-See the [Guide](guide.html) and the [API documentation](doc/index.html).
+See the [Guide](guide.md) and the [API documentation](doc/index.html).
 
 ## Examples
 
