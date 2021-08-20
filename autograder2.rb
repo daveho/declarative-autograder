@@ -90,6 +90,9 @@ class Logger
   end
 
   # Log command output (stdout or stderr) to the reported diagnostics.
+  # This method is used for logging the output of programs or scripts.
+  # The actual logging is delegated to the {#logprivate} or {#log}
+  # methods, depending on the value of the +visibility+ parameter.
   #
   # @param kind what kind of output: each emitted line is prefixed with this string, i.e., +'stdout'+ or +'stderr'+
   # @param output output to log
@@ -102,9 +105,14 @@ class Logger
     end
   end
 
-  # Save a message to be reported as part of test result:
-  # if the "student_visible" option is false (default is true),
-  # then the message will not be reported to the student
+  # Log a message.
+  # The message will be sent to the private (instructor-visible) log,
+  # and if the +student_visible+ option is +true+ (default is +true+),
+  # then the message will be reported to the student as part of the next
+  # test outcome.
+  #
+  # @param [String] msg the message to log
+  # @param [Boolean] student_visible if +true+, message will be visible to student
   def log(msg, student_visible: true)
     # Send to private log
     logprivate(msg)
@@ -168,6 +176,7 @@ class X
   # Return list of files matching specified "file glob" pattern in +files+ directory.
   # "File glob" means "shell wildcard", and the pattern is expanded by the Unix shell.
   # This is not a task, it returns an array of the filenamess matching the pattern.
+  #
   # @param [String] pattern a file glob pattern, e.g., +*.c+ for all filenames ending in +.c+
   # @return [Array<String>] array of filenames matching the file glob pattern
   def self.glob(pattern)
