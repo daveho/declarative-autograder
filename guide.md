@@ -53,7 +53,7 @@ DAF makes the following assumptions about the environment in which the autograde
 
 1. There is a directory hierarchy containing the autograder files and the student submission files
 2. The `run_autograder` script, which is the autograder, is in the top level of the hierarchy
-3. The `autograder2.rb`, which is the Ruby module implementing DAF, is either in the same
+3. The file `autograder2.rb`, which is the Ruby module implementing DAF, is either in the same
    directory as `run_autograder`, or is in a subdirectory called `source`
 4. Data files needed by the autograder, such as test inputs and expected outputs, are
    in a subdirectory named either `files` or `source/files`
