@@ -43,6 +43,18 @@ DEFAULT_SUCCESS_PRED = ->(status, stdout_str, stderr_str) do
   return status.success?
 end
 
+# Default test judge.
+# It considers a test to have passed if the last boolean value
+# in the outcomes array is true.  This obviously works for
+# "normal" tests executed with {#X.run}, which only produce a
+# single boolean. It will also work well with tests which
+# execute {#X.all}. It is probably not a good choice for tests
+# executed with {#X.inorder}, since that produces multiple test
+# results in the outcomes array, which may vary in value.
+DEFAULT_JUDGE = ->(outcomes) do
+  return outcomes[-1] ? 1.0 : 0.0
+end
+
 # Wrapper class for rubric.
 # It simplifies the lookup of rubric items by testname.
 # This class is used internally for test execution and test outcome
@@ -467,27 +479,40 @@ class X
   end
 
   # Return a task which executes a test by invoking the specified task and determining whether
-  # its outcome was successful or unsuccessful.
-  # The success or failure of the test will be reported
-  # by being entered in the results map.
+  # its outcome was successful, unsuccessful, or partially successful.
+  # The correctness of the test will be reported by being entered in the results map.
   #
   # @param [Symbol] testname the testname of the test to execute (which should have
   #                          a corresponding rubric item!)
-  # @param task task the task to execute: its success or failure determines whether the
-  #                  test passes or fails
+  # @param task the task to execute: its success or failure determines whether the
+  #             test passes or fails
+  # @param judge the judge function used to produce a "correctness score"
+  #              in the range 0.0 (completely incorrect) to 1.0 (completely correct)
+  #              from the outcomes array; the default judge assigns 0.0 or 1.0
+  #              based on the last boolean value in the outcomes array
   # @return the task object
-  def self.test(testname, task)
+  def self.test(testname, task, judge: DEFAULT_JUDGE)
     return ->(outcomes, results, logger, rubric) do
       logger.log("Executing test: #{rubric.get_desc(testname)}")
       task.call(outcomes, results, logger, rubric)
-      # Report on success or failure
-      if outcomes[-1]
-        logger.log("Test PASSED")
-        results[testname] = [ 1.0, logger.get_msgs ]
-      else
-        logger.log("Test FAILED")
-        results[testname] = [ 0.0, logger.get_msgs ]
+
+      # Use judge to determine correctness
+      correctness = judge.call(outcomes)
+      if correctness < 0.0 || correctness > 1.0
+        raise "Judge produced incorrect correctness value #{correctness}"
       end
+
+      # Report on success or failure
+      if correctness == 1.0
+        logger.log("Test PASSED")
+      elsif correctness == 0.0
+        logger.log("Test FAILED")
+      else
+        logger.log("Test resulted in partial credit")
+      end
+
+      # Add to results and clear log messages
+      results[testname] = [ correctness, logger.get_msgs ]
       logger.clear
     end
   end
