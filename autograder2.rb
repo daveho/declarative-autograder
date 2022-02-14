@@ -359,6 +359,9 @@ class X
   #                 takes process status object, standard output string, and
   #                 standard error string as parameters, defaults to just checking
   #                 status.success?
+  # @param  rlimit_hash if specified, a hash of resource limit keys (e.g., +:rlimit_stack+)
+  #                 to their corresponding values, specifying resource limits for the
+  #                 subprocess
   # @return the task object
   def self.run(*cmd,
                timeout: DEFAULT_TIMEOUT,
@@ -371,7 +374,8 @@ class X
                stdout_filename: nil,
                subdir: nil,
                env: {},
-               success_pred: DEFAULT_SUCCESS_PRED)
+               success_pred: DEFAULT_SUCCESS_PRED,
+               rlimit_hash: {})
     return ->(outcomes, results, logger, rubric) do
       # Determine where to run the command
       cmddir = subdir.nil? ? 'submission' : "submission/#{subdir}"
@@ -390,9 +394,15 @@ class X
         cmd_to_run.push(timeout.to_s)
         cmd_to_run += cmd
 
+        keyword_args = { stdin_data: stdin_data, binmode: true }
+        rlimit_hash.each_pair do |key, value|
+          raise "Invalid rlimit key #{key}" if !key.to_s.start_with?('rlimit_')
+          keyword_args[key] = value
+        end
+
         #puts "report_command=#{report_command}"
         logger.log("Running command: #{cmd_to_run.join(' ')}") if report_command
-        stdout_str, stderr_str, status = Open3.capture3(env, *cmd_to_run, stdin_data: stdin_data, binmode: true)
+        stdout_str, stderr_str, status = Open3.capture3(env, *cmd_to_run, **keyword_args)
         logger.log_cmd_output('Standard output', stdout_str, report_stdout ? :public : :private)
         logger.log_cmd_output('Standard error', stderr_str, report_stderr ? :public : :private)
         if !stdout_filename.nil?
