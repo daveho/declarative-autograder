@@ -245,19 +245,20 @@ class X
   # Recursively copy one or more entire directories from the +files+ directory into the +submission+ directory
   #
   # @param dirnames directory names to recursively copy from +files+ into +submission+
-  def self.copydir(*dirnames)
+  # @param report_command if +true+, command(s) are reported to student (defaults to +true+)
+  def self.copydir(*dirnames, report_command: true)
     raise "Internal error: no directory specified to copy" if dirnames.empty?
     if dirnames.size == 1
       # base case: copy a single directory
       dirname = dirnames[0]
       return ->(outcomes, results, logger, rubric) do
-        logger.log("Copying directory #{dirname} from files...")
+        logger.log("Copying directory #{dirname} from files...", student_visible: report_command)
         rc = system('cp', '-r', "#{$files}/#{dirname}", "submission")
         outcomes.push(rc)
       end
     else
       # recursive case: copy multiple directories
-      tasks = dirnames.map { |dirname| X.copydir(dirname) }
+      tasks = dirnames.map { |dirname| X.copydir(dirname, report_command: report_command) }
       return X.all(*tasks)
     end
   end
