@@ -402,7 +402,7 @@ class X
         end
 
         #puts "report_command=#{report_command}"
-        logger.log("Running command: #{cmd_to_run.join(' ')}") if report_command
+        logger.log("Running command: #{cmd_to_run.join(' ')}", student_visible: report_command)
         stdout_str, stderr_str, status = Open3.capture3(env, *cmd_to_run, **keyword_args)
         logger.log_cmd_output('Standard output', stdout_str, report_stdout ? :public : :private)
         logger.log_cmd_output('Standard error', stderr_str, report_stderr ? :public : :private)
