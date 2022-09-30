@@ -84,6 +84,15 @@ class Rubric
     end
     raise "Internal error: unknown testname #{testname}"
   end
+
+  # @return the total number of points for all rubric items
+  def get_total_points
+    total = 0.0
+    @spec.each do |item|
+      total += item[2]
+    end
+    return total
+  end
 end
 
 # A Logger object is used by tasks to generate private output
@@ -713,6 +722,8 @@ class X
   def self.execute_tests(rubric, plan)
     rubric = Rubric.new(rubric)
     logger = Logger.new
+
+    logger.logprivate("Starting autograder (total points is #{rubric.get_total_points()})")
 
     # results is a map of testnames to earned scores
     results = {}
