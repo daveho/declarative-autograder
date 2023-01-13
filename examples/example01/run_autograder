@@ -1,0 +1,44 @@
+#! /usr/bin/env ruby
+
+# autograder2.rb could be either in the same directory as run_autograder,
+# or (on Gradescope) could be in "source"
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+$LOAD_PATH.unshift(File.dirname(__FILE__) + "/source")
+
+require 'autograder2'
+
+rubric = [
+  [ :make_succeeds, "Make successfully compiles the program", 5.0 ],
+  [ :test1, "First program test", 10.0 ],
+  [ :test2, "Second program test", 10.0 ],
+  [ :test3, "Third program test", 5.0 ],
+  [ :test4_hidden, "Fourth program test (result is hidden)", 5.0 ],
+]
+
+plan = X.all(
+  # remove any previous compilation results or test files
+  X.run('/bin/sh', '-c', 'rm -f *.o hello *.sh *.in *.out', report_command: false),
+
+  # copy test scripts and expected input/output files
+  X.copy(*X.glob('*.sh'), report_command: false),
+  X.copy(*X.glob('*.in'), report_command: false),
+  X.copy(*X.glob('*.out'), report_command: false),
+  X.copy('Makefile.test', report_command: false),
+
+  # make sure scripts are executable
+  X.run('/bin/sh', '-c', 'chmod a+x *.sh'),
+
+  # compile the student program
+  X.test(:make_succeeds, X.all(X.make('-f', 'Makefile.test', 'hello'),
+                         X.check_exe('hello'))),
+
+  # execute unit tests
+#  X.inorder(
+#    X.test(:test1, X.run('./run_test.sh', './hello', 'test1')),
+#    X.test(:test2, X.run('./run_test.sh', './hello', 'test2')),
+#    X.test(:test3, X.run('./run_test.sh', './hello', 'test3')),
+#    X.test(:test4, X.run('./run_test.sh', './hello', 'test4_hidden')),
+#  ),
+)
+
+X.post_results(X.execute_tests(rubric, plan))

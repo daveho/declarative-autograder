@@ -3,8 +3,8 @@
 This document explains the concepts and techniques needed to use the
 [Declarative Autograder Framework](https://github.com/daveho/declarative-autograder).
 
-From a practical standpoint, looking at the examples (TODO: link to
-examples) is probably the best place to start for learning how to
+From a practical standpoint, looking at the [examples](examples)
+is probably the best place to start for learning how to
 use DAF to implement autograders.  However, the content in
 this document is important if you want to really understand how
 DAF autograders are put together.
@@ -114,6 +114,21 @@ submission/
     ...etc...
 ```
 
+Because this difference affects the location of `autograder2.rb` relative
+to the `run_autograder` script, your `run_autograder` script should
+begin with the following code:
+
+```ruby
+#! /usr/bin/env ruby
+
+# autograder2.rb could be either in the same directory as run_autograder,
+# or (on Gradescope) could be in "source"
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+$LOAD_PATH.unshift(File.dirname(__FILE__) + "/source")
+
+require 'autograder2'
+```
+
 DAF is designed to allow either of these runtime configurations to work.
 
 ## Concepts
@@ -132,19 +147,22 @@ autograder script.  Example:
 
 ```ruby
 rubric = [
-  [:make_succeeds, "Make successfully compiles the program", 5.0],
-  [:test1, "First program test", 10.0],
-  [:test2, "Second program test", 10.0],
-  [:test3, "Third program test", 5.0],
+  [ :make_succeeds, "Make successfully compiles the program", 5.0 ],
+  [ :test1, "First program test", 10.0 ],
+  [ :test2, "Second program test", 10.0 ],
+  [ :test3, "Third program test", 5.0 ],
+  [ :test4_hidden, "Fourth program test (result is hidden)", 5.0 ],
 ]
 ```
 
 The rubric above specifies four rubric items, worth a total of 30 points.
 The `:make_succeeds` rubric item represents the requirement that the student
-program compile successfully using make.  The `:test1`, `:test2`, and `:test3`
-rubric items represent functional tests which will evaluate the extent to
-which the student's submission meets the functional specifications
-in the assignment description.
+program compile successfully using make.  The `:test1`, `:test2`, `:test3`,
+and `:test4_hidden` rubric items represent functional tests which will
+evaluate the extent to which the student's submission meets the functional
+specifications in the assignment description. If a test name ends in
+"`_hidden`", the result of running the test is not revealed to the
+student.
 
 ### Tasks, task results, and tests
 
