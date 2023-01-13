@@ -1,0 +1,40 @@
+#! /usr/bin/env ruby
+
+# autograder2.rb could be either in the same directory as run_autograder,
+# or (on Gradescope) could be in "source"
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+$LOAD_PATH.unshift(File.dirname(__FILE__) + "/source")
+
+require 'autograder2'
+
+rubric = [
+  [ :code_compiles, 'Code compiles', 5.0 ],
+  [ :testIsZeroInitially, 'test that inital value is 0', 5.0 ],
+  [ :testSet, 'test set', 5.0 ],
+  [ :testAdd, 'test add', 5.0 ],
+  [ :testSub, 'test sub', 5.0 ],
+]
+
+plan = X.all(
+  # remote previous compilation results and test files
+  X.run('/bin/sh', '-c', 'rm -rf bin'),
+
+  # copy JUnit, test scripts
+  X.copy(*X.glob('*.jar'), report_command: false),
+  X.copy(*X.glob('*.sh'), report_command: false),
+  X.run('/bin/sh', '-c', 'chmod a+x *.sh', report_command: false),
+  X.copy('CalculatorTest.java', subdir: 'src/edu/jhu/cs/example', report_command: false),
+
+  # build test driver program (which includes the student code)
+  X.test(:code_compiles, X.run('./compile.sh')),
+
+  # execute unit tests
+  X.inorder(
+    X.test(:testIsZeroInitially, X.run('./run_test.sh', 'testIsZeroInitially')),
+    X.test(:testSet, X.run('./run_test.sh', 'testSet')),
+    X.test(:testAdd, X.run('./run_test.sh', 'testAdd')),
+    X.test(:testSub, X.run('./run_test.sh', 'testSub')),
+  ),
+)
+
+X.post_results(X.execute_tests(rubric, plan))

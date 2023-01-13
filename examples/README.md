@@ -14,7 +14,8 @@ cp -r example_solution submission
 ./run_autograder
 ```
 
-Note that the example solutions have deliberate mistakes so that not
+Note that the example solutions for [example01](example01) and
+[example02](example02) have deliberate mistakes so that not
 all autograder tests pass.
 
 Each example has a shell script `mkzip.sh` which will create a zipfile
