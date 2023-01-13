@@ -35,9 +35,9 @@ plan = X.all(
   # execute unit tests
   X.inorder(
     X.test(:test1, X.run('./run_test.sh', './hello', 'test1')),
-#    X.test(:test2, X.run('./run_test.sh', './hello', 'test2')),
-#    X.test(:test3, X.run('./run_test.sh', './hello', 'test3')),
-#    X.test(:test4, X.run('./run_test.sh', './hello', 'test4_hidden')),
+    X.test(:test2, X.run('./run_test.sh', './hello', 'test2')),
+    X.test(:test3, X.run('./run_test.sh', './hello', 'test3')),
+    X.test(:test4_hidden, X.run('./run_test.sh', './hello', 'test4_hidden')),
   ),
 )
 
