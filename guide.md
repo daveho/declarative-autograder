@@ -352,8 +352,31 @@ hash to whatever format is desired.
 
 ## Writing test scripts
 
-TODO
+A key principle in DAF is that it's more important to focus on *what* is tested
+than *how* those tests are executed. However, at some point there does need to
+be a concrete mechanism for testing the submitted code.
 
-## Putting it all together
+The approach we recommend is to write a test script (or scripts) which
+handle the details of executing the compiled student code and judging
+whether or not the execution was correct, and then use the
+[X.run](https://daveho.github.io/declarative-autograder/X.html#run-class_method)
+task to execute the test script. In the [examples](examples) directory
+you will find autograders which
 
-TODO
+* test a program by sending it input via standard input, collecting the
+  program's standard output, and comparing the output to an expected output
+  file ([example01](example01))
+* test C functions by executing unit tests against them ([example02](example02))
+* test Java methods by executing JUnit 4 unit tests against them
+  ([example03](example03))
+
+The only requirement for a test script is that it exit with the exit code
+0 if it the test passes, and a non-zero exit code if the test fails.
+
+You can have the test script generate output to standard output and/or
+standard error. This output will be collected, and if you run the autograder
+on Gradescope, this output will be visible to graders. However, by default,
+this output will *not* be visible to students. However, you can make
+the output a test script visible to the student by specifying
+`report_stdout: true` and/or `report_stderr: true` as keyword arguments
+in the invocation of the `X.run` task.
