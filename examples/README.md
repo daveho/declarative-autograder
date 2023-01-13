@@ -17,6 +17,9 @@ cp -r example_solution submission
 Note that the example solutions have deliberate mistakes so that not
 all autograder tests pass.
 
+Each example has a shell script `mkzip.sh` which will create a zipfile
+which can be uploaded as a Gradescope autograder.
+
 The [example01](example01) autograder tests a simple C program
 that reads input from standard input and writes output to standard output.
 
