@@ -1,0 +1,36 @@
+#! /usr/bin/env ruby
+
+# autograder2.rb could be either in the same directory as run_autograder,
+# or (on Gradescope) could be in "source"
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+$LOAD_PATH.unshift(File.dirname(__FILE__) + "/source")
+
+require 'autograder2'
+
+rubric = [
+  [ :make_succeeds, 'Make succeeds', 5.0 ],
+  [ :testPush, 'test stackPush', 5.0 ],
+  [ :testPushMany, 'test repeated stackPush', 5.0 ],
+  [ :testSwapTopElts, 'test stackSwapTopElts', 5.0 ],
+  [ :testSizeIsEven, 'test stackSizeIsEven', 5.0 ],
+]
+
+plan = X.all(
+  # remote previous compilation results and test files
+  X.run('/bin/sh', '-c', 'rm -f *.o test_driver', report_command: false),
+
+  # copy unit test framework, test driver program, and makefile
+  X.copy('tctest.h', 'tctest.c', 'test_driver.c', 'Makefile.test', report_command: false),
+
+  # build test driver program (which includes the student code)
+  X.test(:make_succeeds, X.all(X.make('-f', 'Makefile.test', 'test_driver'),
+                               X.check_exe('test_driver'))),
+
+  # execute unit tests
+  X.inorder(X.test(:testPush, X.run('./test_driver', 'testPush')),
+            X.test(:testPushMany, X.run('./test_driver', 'testPushMany')),
+            X.test(:testSwapTopElts, X.run('./test_driver', 'testSwapTopElts')),
+            X.test(:testSizeIsEven, X.run('./test_driver', 'testSizeIsEven'))),
+)
+
+X.post_results(X.execute_tests(rubric, plan))

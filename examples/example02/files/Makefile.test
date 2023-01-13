@@ -1,0 +1,17 @@
+CC = gcc
+CFLAGS = -g -Wall
+
+test_driver : test_driver.o tctest.o stack.o
+	$(CC) -o $@ test_driver.o tctest.o stack.o
+
+test_driver.o : test_driver.c stack.h
+	$(CC) $(CFLAGS) -c test_driver.c
+
+tctest.o : tctest.c tctest.h
+	$(CC) $(CFLAGS) -c tctest.c
+
+stack.o : stack.c stack.h
+	$(CC) $(CFLAGS) -c stack.c
+
+clean :
+	rm -f test_driver *.o
