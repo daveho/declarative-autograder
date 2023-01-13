@@ -135,7 +135,7 @@ rubric = [
   [:make_succeeds, "Make successfully compiles the program", 5.0],
   [:test1, "First program test", 10.0],
   [:test2, "Second program test", 10.0],
-  [:test3, "Third program tes", 5.0],
+  [:test3, "Third program test", 5.0],
 ]
 ```
 
@@ -238,8 +238,10 @@ X.all(
          'expected_output_1.txt'
          'expected_output_2.txt',
          'run_program.sh'),
+
   # compile the student program
   X.test(:make_succeeds, X.make('program')),
+
   # ...now the tests can be executed...
 )
 ```
@@ -265,8 +267,10 @@ X.all(
          'expected_output_1.txt'
          'expected_output_2.txt',
          'run_program.sh'),
+
   # compile the student program
   X.test(:make_succeeds, X.make('program')),
+
   # execute the tests against the student program
   X.inorder(
     X.test(:test_case_1, X.run('./run_program.sh', './program',
