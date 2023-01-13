@@ -16,7 +16,10 @@ The code is distributed under the MIT license.  Comments to <mailto:david.hoveme
 
 ## Documentation
 
-See the [Guide](guide.md) and the [API documentation](https://daveho.github.io/declarative-autograder).
+The [Guide](guide.md) documents how to use DAF.
+
+The [API documentation](https://daveho.github.io/declarative-autograder) explains
+how the various API functions work.
 
 ## Examples
 
