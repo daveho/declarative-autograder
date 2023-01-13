@@ -5,9 +5,7 @@ This is an experiment to create a general-purpose framework for implementing
 the [Gradescope autograder specification](https://gradescope-autograders.readthedocs.io/en/latest/specs/)
 for more information about how they work.
 
-[autograder2.rb](autograder2.rb) is a result of this experiment.  There is
-no documentation or example code yet (TODO, coming soon), but it works pretty
-well and supports *very* clean `run_autograder` scripts.
+[autograder2.rb](autograder2.rb) is a result of this experiment.
 
 Note that the framework could be adapted fairly easily to run in contexts
 other than Gradescope.  The result of autograding is a data structure
