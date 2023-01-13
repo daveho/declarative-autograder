@@ -22,4 +22,4 @@ See the [Guide](guide.md) and the [API documentation](https://daveho.github.io/d
 
 ## Examples
 
-One way to see how the framework is to look at examples. (TODO: link to examples)
+The [examples](examples) directory has several complete example autograders.
