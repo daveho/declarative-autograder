@@ -308,7 +308,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#copydir-class_method" title="copydir (class method)">.<strong>copydir</strong>(*dirnames)  &#x21d2; Object </a>
+      <a href="#copydir-class_method" title="copydir (class method)">.<strong>copydir</strong>(*dirnames, report_command: true)  &#x21d2; Object </a>
     
 
     
@@ -596,7 +596,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#run-class_method" title="run (class method)">.<strong>run</strong>(*cmd, timeout: DEFAULT_TIMEOUT, report_command: true, report_stdout: false, report_stderr: false, report_outcome: true, stdin_filename: nil, stdout_filename: nil, subdir: nil, env: {}, success_pred: DEFAULT_SUCCESS_PRED)  &#x21d2; Object </a>
+      <a href="#run-class_method" title="run (class method)">.<strong>run</strong>(*cmd, timeout: DEFAULT_TIMEOUT, timeout_signal: nil, report_command: true, report_stdout: false, report_stderr: false, report_outcome: true, stdin_filename: nil, stdout_filename: nil, subdir: nil, env: {}, success_pred: DEFAULT_SUCCESS_PRED, rlimit_hash: {})  &#x21d2; Object </a>
     
 
     
@@ -620,7 +620,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#test-class_method" title="test (class method)">.<strong>test</strong>(testname, task)  &#x21d2; Object </a>
+      <a href="#test-class_method" title="test (class method)">.<strong>test</strong>(testname, task, judge: DEFAULT_JUDGE)  &#x21d2; Object </a>
     
 
     
@@ -635,7 +635,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Return a task which executes a test by invoking the specified task and determining whether its outcome was successful or unsuccessful.</p>
+<p>Return a task which executes a test by invoking the specified task and determining whether its outcome was successful, unsuccessful, or partially successful.</p>
 </div></span>
   
 </li>
@@ -738,12 +738,12 @@
       <pre class="lines">
 
 
-611
-612
-613</pre>
+666
+667
+668</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 611</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 666</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid__visibility_of'>_visibility_of</span><span class='lparen'>(</span><span class='id identifier rubyid_testname'>testname</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_testname'>testname</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_end_with?'>end_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>_hidden</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>hidden</span><span class='tstring_end'>&#39;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>visible</span><span class='tstring_end'>&#39;</span></span>
@@ -849,39 +849,39 @@
       <pre class="lines">
 
 
-520
-521
-522
-523
-524
-525
-526
-527
-528
-529
-530
-531
-532
-533
-534
-535
-536
-537
-538
-539
-540
-541
-542
-543
-544
-545
-546
-547
-548
-549</pre>
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 520</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 575</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_tasks'>tasks</span><span class='comma'>,</span> <span class='label'>report_failure:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span> <span class='kw'>do</span>
@@ -1018,26 +1018,26 @@
       <pre class="lines">
 
 
-260
-261
-262
-263
-264
-265
-266
-267
-268
-269
-270
-271
-272
-273
-274
-275
-276</pre>
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 260</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 282</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_check'>check</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_filenames'>filenames</span><span class='comma'>,</span> <span class='label'>check_exe:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>subdir:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span> <span class='kw'>do</span>
@@ -1143,12 +1143,12 @@
       <pre class="lines">
 
 
-284
-285
-286</pre>
+306
+307
+308</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 284</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 306</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_check_exe'>check_exe</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_filenames'>filenames</span><span class='comma'>,</span> <span class='label'>subdir:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_check'>check</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_filenames'>filenames</span><span class='comma'>,</span> <span class='label'>check_exe:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>subdir:</span> <span class='id identifier rubyid_subdir'>subdir</span><span class='rparen'>)</span>
@@ -1185,12 +1185,12 @@
       <pre class="lines">
 
 
-289
-290
-291</pre>
+311
+312
+313</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 289</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 311</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_checkExe'>checkExe</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_filenames'>filenames</span><span class='comma'>,</span> <span class='label'>subdir:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_check_exe'>check_exe</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_filenames'>filenames</span><span class='comma'>,</span> <span class='label'>subdir:</span> <span class='id identifier rubyid_subdir'>subdir</span><span class='rparen'>)</span>
@@ -1264,20 +1264,20 @@
       <pre class="lines">
 
 
-178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188</pre>
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 178</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 199</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_combine'>combine</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1377,27 +1377,27 @@
       <pre class="lines">
 
 
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227
-228
-229
-230
-231</pre>
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 214</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 235</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_copy'>copy</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='label'>subdir:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>report_command:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Internal error: no file specified to copy</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_files'>files</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -1425,7 +1425,7 @@
       <div class="method_details ">
   <h3 class="signature " id="copydir-class_method">
   
-    .<strong>copydir</strong>(*dirnames)  &#x21d2; <tt>Object</tt> 
+    .<strong>copydir</strong>(*dirnames, report_command: true)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1459,6 +1459,24 @@
       
     </li>
   
+    <li>
+      
+        <span class='name'>report_command</span>
+      
+      
+        <span class='type'></span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if <code>true</code>, command(s) are reported to student (defaults to <code>true</code>)</p>
+</div>
+      
+    </li>
+  
 </ul>
 
 
@@ -1468,39 +1486,39 @@
       <pre class="lines">
 
 
-236
-237
-238
-239
-240
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250
-251</pre>
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 236</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 258</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_copydir'>copydir</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_dirnames'>dirnames</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_copydir'>copydir</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_dirnames'>dirnames</span><span class='comma'>,</span> <span class='label'>report_command:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Internal error: no directory specified to copy</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_dirnames'>dirnames</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_dirnames'>dirnames</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>==</span> <span class='int'>1</span>
     <span class='comment'># base case: copy a single directory
 </span>    <span class='id identifier rubyid_dirname'>dirname</span> <span class='op'>=</span> <span class='id identifier rubyid_dirnames'>dirnames</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
     <span class='kw'>return</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span> <span class='kw'>do</span>
-      <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Copying directory </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dirname'>dirname</span><span class='embexpr_end'>}</span><span class='tstring_content'> from files...</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Copying directory </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dirname'>dirname</span><span class='embexpr_end'>}</span><span class='tstring_content'> from files...</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>student_visible:</span> <span class='id identifier rubyid_report_command'>report_command</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_rc'>rc</span> <span class='op'>=</span> <span class='id identifier rubyid_system'>system</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>cp</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-r</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='gvar'>$files</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dirname'>dirname</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>submission</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
       <span class='id identifier rubyid_outcomes'>outcomes</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_rc'>rc</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
   <span class='kw'>else</span>
     <span class='comment'># recursive case: copy multiple directories
-</span>    <span class='id identifier rubyid_tasks'>tasks</span> <span class='op'>=</span> <span class='id identifier rubyid_dirnames'>dirnames</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_dirname'>dirname</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="" title="X (class)">X</a></span></span><span class='period'>.</span><span class='id identifier rubyid_copydir'>copydir</span><span class='lparen'>(</span><span class='id identifier rubyid_dirname'>dirname</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+</span>    <span class='id identifier rubyid_tasks'>tasks</span> <span class='op'>=</span> <span class='id identifier rubyid_dirnames'>dirnames</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_dirname'>dirname</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="" title="X (class)">X</a></span></span><span class='period'>.</span><span class='id identifier rubyid_copydir'>copydir</span><span class='lparen'>(</span><span class='id identifier rubyid_dirname'>dirname</span><span class='comma'>,</span> <span class='label'>report_command:</span> <span class='id identifier rubyid_report_command'>report_command</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
     <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="" title="X (class)">X</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'><span class='object_link'><a href="#all-class_method" title="X.all (method)">all</a></span></span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_tasks'>tasks</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -1573,21 +1591,21 @@
       <pre class="lines">
 
 
-438
-439
-440
-441
-442
-443
-444
-445
-446
-447
-448
-449</pre>
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 438</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 480</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_eval_pred'>eval_pred</span><span class='lparen'>(</span><span class='id identifier rubyid_pred'>pred</span><span class='comma'>,</span> <span class='label'>report_desc:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>report_outcome:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span> <span class='kw'>do</span>
@@ -1686,41 +1704,45 @@
       <pre class="lines">
 
 
-667
-668
-669
-670
-671
-672
-673
-674
-675
-676
-677
-678
-679
-680
-681
-682
-683
-684
-685
-686
-687
-688
-689
-690
-691
-692
-693
-694</pre>
+722
+723
+724
+725
+726
+727
+728
+729
+730
+731
+732
+733
+734
+735
+736
+737
+738
+739
+740
+741
+742
+743
+744
+745
+746
+747
+748
+749
+750
+751</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 667</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 722</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_execute_tests'>execute_tests</span><span class='lparen'>(</span><span class='id identifier rubyid_rubric'>rubric</span><span class='comma'>,</span> <span class='id identifier rubyid_plan'>plan</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_rubric'>rubric</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Rubric.html" title="Rubric (class)">Rubric</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rubric.html#initialize-instance_method" title="Rubric#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_logger'>logger</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Logger.html" title="Logger (class)">Logger</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Logger.html#initialize-instance_method" title="Logger#initialize (method)">new</a></span></span>
+
+  <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_logprivate'>logprivate</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Starting autograder (total points is </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_rubric'>rubric</span><span class='period'>.</span><span class='id identifier rubyid_get_total_points'>get_total_points</span><span class='lparen'>(</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
   <span class='comment'># results is a map of testnames to earned scores
 </span>  <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1815,15 +1837,15 @@
       <pre class="lines">
 
 
-598
-599
-600
-601
-602
-603</pre>
+653
+654
+655
+656
+657
+658</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 598</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 653</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_expectfail'>expectfail</span><span class='lparen'>(</span><span class='id identifier rubyid_task'>task</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span> <span class='kw'>do</span>
@@ -1900,19 +1922,19 @@
       <pre class="lines">
 
 
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205</pre>
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 196</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 217</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='id identifier rubyid_pattern'>pattern</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1997,16 +2019,16 @@
       <pre class="lines">
 
 
-562
-563
-564
-565
-566
-567
-568</pre>
+617
+618
+619
+620
+621
+622
+623</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 562</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 617</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_inorder'>inorder</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_tasks'>tasks</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span> <span class='kw'>do</span>
@@ -2102,35 +2124,35 @@
       <pre class="lines">
 
 
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312
-313
-314
-315
-316
-317
-318
-319
-320
-321
-322
 323
 324
 325
-326</pre>
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 301</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 323</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_make'>make</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_makeargs'>makeargs</span><span class='comma'>,</span> <span class='label'>subdir:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span> <span class='kw'>do</span>
@@ -2227,19 +2249,19 @@
       <pre class="lines">
 
 
-578
-579
-580
-581
-582
-583
-584
-585
-586
-587</pre>
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 578</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 633</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_nofail'>nofail</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_tasks'>tasks</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span> <span class='kw'>do</span>
@@ -2282,15 +2304,15 @@
       <pre class="lines">
 
 
-698
-699
-700
-701
-702
-703</pre>
+755
+756
+757
+758
+759
+760</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 698</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 755</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_post_results'>post_results</span><span class='lparen'>(</span><span class='id identifier rubyid_results_json'>results_json</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_system'>system</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>mkdir -p results</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
@@ -2365,12 +2387,12 @@
       <pre class="lines">
 
 
-420
-421
-422</pre>
+462
+463
+464</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 420</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 462</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pred'>pred</span><span class='lparen'>(</span><span class='id identifier rubyid_pred_func'>pred_func</span><span class='comma'>,</span> <span class='id identifier rubyid_desc'>desc</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="X/Pred.html" title="X::Pred (class)">Pred</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="X/Pred.html#initialize-instance_method" title="X::Pred#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_pred_func'>pred_func</span><span class='comma'>,</span> <span class='id identifier rubyid_desc'>desc</span><span class='rparen'>)</span>
@@ -2474,18 +2496,18 @@
       <pre class="lines">
 
 
-644
-645
-646
-647
-648
-649
-650
-651
-652</pre>
+699
+700
+701
+702
+703
+704
+705
+706
+707</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 644</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 699</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_result_obj'>result_obj</span><span class='lparen'>(</span><span class='id identifier rubyid_testname'>testname</span><span class='comma'>,</span> <span class='id identifier rubyid_desc'>desc</span><span class='comma'>,</span> <span class='id identifier rubyid_maxscore'>maxscore</span><span class='comma'>,</span> <span class='id identifier rubyid_outcome_pair'>outcome_pair</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='lbrace'>{</span>
@@ -2581,18 +2603,18 @@
       <pre class="lines">
 
 
-625
-626
-627
-628
-629
-630
-631
-632
-633</pre>
+680
+681
+682
+683
+684
+685
+686
+687
+688</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 625</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 680</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_result_obj_for_missing_test'>result_obj_for_missing_test</span><span class='lparen'>(</span><span class='id identifier rubyid_testname'>testname</span><span class='comma'>,</span> <span class='id identifier rubyid_desc'>desc</span><span class='comma'>,</span> <span class='id identifier rubyid_maxscore'>maxscore</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='lbrace'>{</span>
@@ -2611,7 +2633,7 @@
       <div class="method_details ">
   <h3 class="signature " id="run-class_method">
   
-    .<strong>run</strong>(*cmd, timeout: DEFAULT_TIMEOUT, report_command: true, report_stdout: false, report_stderr: false, report_outcome: true, stdin_filename: nil, stdout_filename: nil, subdir: nil, env: {}, success_pred: DEFAULT_SUCCESS_PRED)  &#x21d2; <tt>Object</tt> 
+    .<strong>run</strong>(*cmd, timeout: DEFAULT_TIMEOUT, timeout_signal: nil, report_command: true, report_stdout: false, report_stderr: false, report_outcome: true, stdin_filename: nil, stdout_filename: nil, subdir: nil, env: {}, success_pred: DEFAULT_SUCCESS_PRED, rlimit_hash: {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -2661,6 +2683,24 @@
         &mdash;
         <div class='inline'>
 <p>timeout in seconds</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>timeout_signal</span>
+      
+      
+        <span class='type'></span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>signal to send to the process if a timeout occurs, e.g., &#39;INT&#39; for SIGINT</p>
 </div>
       
     </li>
@@ -2827,6 +2867,24 @@
       
     </li>
   
+    <li>
+      
+        <span class='name'>rlimit_hash</span>
+      
+      
+        <span class='type'></span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if specified, a hash of resource limit keys (e.g., <code>:rlimit_stack</code>) to their corresponding values, specifying resource limits for the subprocess</p>
+</div>
+      
+    </li>
+  
 </ul>
 
 <p class="tag_title">Returns:</p>
@@ -2854,32 +2912,6 @@
       <pre class="lines">
 
 
-350
-351
-352
-353
-354
-355
-356
-357
-358
-359
-360
-361
-362
-363
-364
-365
-366
-367
-368
-369
-370
-371
-372
-373
-374
-375
 376
 377
 378
@@ -2893,13 +2925,56 @@
 386
 387
 388
-389</pre>
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 350</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 376</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_run'>run</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_cmd'>cmd</span><span class='comma'>,</span>
              <span class='label'>timeout:</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#DEFAULT_TIMEOUT-constant" title="DEFAULT_TIMEOUT (constant)">DEFAULT_TIMEOUT</a></span></span><span class='comma'>,</span>
+             <span class='label'>timeout_signal:</span> <span class='kw'>nil</span><span class='comma'>,</span>
              <span class='label'>report_command:</span> <span class='kw'>true</span><span class='comma'>,</span>
              <span class='label'>report_stdout:</span> <span class='kw'>false</span><span class='comma'>,</span>
              <span class='label'>report_stderr:</span> <span class='kw'>false</span><span class='comma'>,</span>
@@ -2908,7 +2983,8 @@
              <span class='label'>stdout_filename:</span> <span class='kw'>nil</span><span class='comma'>,</span>
              <span class='label'>subdir:</span> <span class='kw'>nil</span><span class='comma'>,</span>
              <span class='label'>env:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span>
-             <span class='label'>success_pred:</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#DEFAULT_SUCCESS_PRED-constant" title="DEFAULT_SUCCESS_PRED (constant)">DEFAULT_SUCCESS_PRED</a></span></span><span class='rparen'>)</span>
+             <span class='label'>success_pred:</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#DEFAULT_SUCCESS_PRED-constant" title="DEFAULT_SUCCESS_PRED (constant)">DEFAULT_SUCCESS_PRED</a></span></span><span class='comma'>,</span>
+             <span class='label'>rlimit_hash:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='comment'># Determine where to run the command
 </span>    <span class='id identifier rubyid_cmddir'>cmddir</span> <span class='op'>=</span> <span class='id identifier rubyid_subdir'>subdir</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>submission</span><span class='tstring_end'>&#39;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>submission/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_subdir'>subdir</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -2918,10 +2994,24 @@
 
     <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_chdir'>chdir</span><span class='lparen'>(</span><span class='id identifier rubyid_cmddir'>cmddir</span><span class='rparen'>)</span> <span class='kw'>do</span>
       <span class='id identifier rubyid_stdin_data'>stdin_data</span> <span class='op'>=</span> <span class='id identifier rubyid_stdin_filename'>stdin_filename</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span> <span class='op'>:</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_stdin_filename'>stdin_filename</span><span class='comma'>,</span> <span class='label'>binmode:</span> <span class='kw'>true</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_cmd'>cmd</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_timeout'>timeout</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_cmd'>cmd</span>
+
+      <span class='comment'># Prepare the command to run (wrapping the requested command using timeout)
+</span>      <span class='comment'>#cmd = [&#39;timeout&#39;, timeout.to_s ] + cmd
+</span>      <span class='id identifier rubyid_cmd_to_run'>cmd_to_run</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_cmd_to_run'>cmd_to_run</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_cmd_to_run'>cmd_to_run</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--signal=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_timeout_signal'>timeout_signal</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_timeout_signal'>timeout_signal</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+      <span class='id identifier rubyid_cmd_to_run'>cmd_to_run</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_timeout'>timeout</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_cmd_to_run'>cmd_to_run</span> <span class='op'>+=</span> <span class='id identifier rubyid_cmd'>cmd</span>
+
+      <span class='id identifier rubyid_keyword_args'>keyword_args</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>stdin_data:</span> <span class='id identifier rubyid_stdin_data'>stdin_data</span><span class='comma'>,</span> <span class='label'>binmode:</span> <span class='kw'>true</span> <span class='rbrace'>}</span>
+      <span class='id identifier rubyid_rlimit_hash'>rlimit_hash</span><span class='period'>.</span><span class='id identifier rubyid_each_pair'>each_pair</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Invalid rlimit key </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rlimit_</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_keyword_args'>keyword_args</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+      <span class='kw'>end</span>
+
       <span class='comment'>#puts &quot;report_command=#{report_command}&quot;
-</span>      <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Running command: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cmd'>cmd</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_report_command'>report_command</span>
-      <span class='id identifier rubyid_stdout_str'>stdout_str</span><span class='comma'>,</span> <span class='id identifier rubyid_stderr_str'>stderr_str</span><span class='comma'>,</span> <span class='id identifier rubyid_status'>status</span> <span class='op'>=</span> <span class='const'>Open3</span><span class='period'>.</span><span class='id identifier rubyid_capture3'>capture3</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_cmd'>cmd</span><span class='comma'>,</span> <span class='label'>stdin_data:</span> <span class='id identifier rubyid_stdin_data'>stdin_data</span><span class='comma'>,</span> <span class='label'>binmode:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+</span>      <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Running command: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cmd_to_run'>cmd_to_run</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>student_visible:</span> <span class='id identifier rubyid_report_command'>report_command</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_stdout_str'>stdout_str</span><span class='comma'>,</span> <span class='id identifier rubyid_stderr_str'>stderr_str</span><span class='comma'>,</span> <span class='id identifier rubyid_status'>status</span> <span class='op'>=</span> <span class='const'>Open3</span><span class='period'>.</span><span class='id identifier rubyid_capture3'>capture3</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_cmd_to_run'>cmd_to_run</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_keyword_args'>keyword_args</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_log_cmd_output'>log_cmd_output</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Standard output</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_stdout_str'>stdout_str</span><span class='comma'>,</span> <span class='id identifier rubyid_report_stdout'>report_stdout</span> <span class='op'>?</span> <span class='symbol'>:public</span> <span class='op'>:</span> <span class='symbol'>:private</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_log_cmd_output'>log_cmd_output</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Standard error</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_stderr_str'>stderr_str</span><span class='comma'>,</span> <span class='id identifier rubyid_report_stderr'>report_stderr</span> <span class='op'>?</span> <span class='symbol'>:public</span> <span class='op'>:</span> <span class='symbol'>:private</span><span class='rparen'>)</span>
       <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_stdout_filename'>stdout_filename</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -2946,7 +3036,7 @@
       <div class="method_details ">
   <h3 class="signature " id="test-class_method">
   
-    .<strong>test</strong>(testname, task)  &#x21d2; <tt>Object</tt> 
+    .<strong>test</strong>(testname, task, judge: DEFAULT_JUDGE)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -2955,7 +3045,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Return a task which executes a test by invoking the specified task and determining whether its outcome was successful or unsuccessful. The success or failure of the test will be reported by being entered in the results map.</p>
+<p>Return a task which executes a test by invoking the specified task and determining whether its outcome was successful, unsuccessful, or partially successful. The correctness of the test will be reported by being entered in the results map.</p>
 
 
   </div>
@@ -2991,7 +3081,25 @@
       
         &mdash;
         <div class='inline'>
-<p>task the task to execute: its success or failure determines whether the test passes or fails</p>
+<p>the task to execute: its success or failure determines whether the test passes or fails</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>judge</span>
+      
+      
+        <span class='type'></span>
+      
+      
+        <em class="default">(defaults to: <tt>DEFAULT_JUDGE</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the judge function used to produce a “correctness score” in the range 0.0 (completely incorrect) to 1.0 (completely correct) from the outcomes array; the default judge assigns 0.0 or 1.0 based on the last boolean value in the outcomes array</p>
 </div>
       
     </li>
@@ -3023,37 +3131,57 @@
       <pre class="lines">
 
 
-479
-480
-481
-482
-483
-484
-485
-486
-487
-488
-489
-490
-491
-492
-493</pre>
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 479</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 524</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_test'>test</span><span class='lparen'>(</span><span class='id identifier rubyid_testname'>testname</span><span class='comma'>,</span> <span class='id identifier rubyid_task'>task</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_test'>test</span><span class='lparen'>(</span><span class='id identifier rubyid_testname'>testname</span><span class='comma'>,</span> <span class='id identifier rubyid_task'>task</span><span class='comma'>,</span> <span class='label'>judge:</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#DEFAULT_JUDGE-constant" title="DEFAULT_JUDGE (constant)">DEFAULT_JUDGE</a></span></span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Executing test: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_rubric'>rubric</span><span class='period'>.</span><span class='id identifier rubyid_get_desc'>get_desc</span><span class='lparen'>(</span><span class='id identifier rubyid_testname'>testname</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
     <span class='id identifier rubyid_task'>task</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_rubric'>rubric</span><span class='rparen'>)</span>
-    <span class='comment'># Report on success or failure
-</span>    <span class='kw'>if</span> <span class='id identifier rubyid_outcomes'>outcomes</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span>
-      <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Test PASSED</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_results'>results</span><span class='lbracket'>[</span><span class='id identifier rubyid_testname'>testname</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span> <span class='float'>1.0</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_get_msgs'>get_msgs</span> <span class='rbracket'>]</span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Test FAILED</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_results'>results</span><span class='lbracket'>[</span><span class='id identifier rubyid_testname'>testname</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span> <span class='float'>0.0</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_get_msgs'>get_msgs</span> <span class='rbracket'>]</span>
+
+    <span class='comment'># Use judge to determine correctness
+</span>    <span class='id identifier rubyid_correctness'>correctness</span> <span class='op'>=</span> <span class='id identifier rubyid_judge'>judge</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_correctness'>correctness</span> <span class='op'>&lt;</span> <span class='float'>0.0</span> <span class='op'>||</span> <span class='id identifier rubyid_correctness'>correctness</span> <span class='op'>&gt;</span> <span class='float'>1.0</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Judge produced incorrect correctness value </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_correctness'>correctness</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>end</span>
+
+    <span class='comment'># Report on success or failure
+</span>    <span class='kw'>if</span> <span class='id identifier rubyid_correctness'>correctness</span> <span class='op'>==</span> <span class='float'>1.0</span>
+      <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Test PASSED</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_correctness'>correctness</span> <span class='op'>==</span> <span class='float'>0.0</span>
+      <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Test FAILED</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Test resulted in partial credit</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+
+    <span class='comment'># Add to results and clear log messages
+</span>    <span class='id identifier rubyid_results'>results</span><span class='lbracket'>[</span><span class='id identifier rubyid_testname'>testname</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span> <span class='id identifier rubyid_correctness'>correctness</span><span class='comma'>,</span> <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_get_msgs'>get_msgs</span> <span class='rbracket'>]</span>
     <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -3142,16 +3270,16 @@
       <pre class="lines">
 
 
-461
-462
-463
-464
-465
-466
-467</pre>
+503
+504
+505
+506
+507
+508
+509</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 461</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 503</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_test_passed'>test_passed</span><span class='lparen'>(</span><span class='id identifier rubyid_testname'>testname</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span><span class='lparen'>(</span><span class='id identifier rubyid_testname'>testname</span><span class='rparen'>)</span>
@@ -3170,9 +3298,9 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Aug 20 12:49:44 2021 by
+  Generated on Fri Jan 13 17:08:53 2023 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.7.4).
+  0.9.26 (ruby-2.7.0).
 </div>
 
     </div>

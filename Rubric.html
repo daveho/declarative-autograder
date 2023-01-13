@@ -195,6 +195,30 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#get_total_points-instance_method" title="#get_total_points (instance method)">#<strong>get_total_points</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The total number of points for all rubric items.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(spec)  &#x21d2; Rubric </a>
     
 
@@ -270,12 +294,12 @@
       <pre class="lines">
 
 
-62
-63
-64</pre>
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_spec'>spec</span><span class='rparen'>)</span>
   <span class='ivar'>@spec</span> <span class='op'>=</span> <span class='id identifier rubyid_spec'>spec</span>
@@ -318,12 +342,12 @@
       <pre class="lines">
 
 
-59
-60
-61</pre>
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_spec'>spec</span>
   <span class='ivar'>@spec</span>
@@ -404,15 +428,15 @@
       <pre class="lines">
 
 
-69
-70
-71
-72
-73
-74</pre>
+81
+82
+83
+84
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 81</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_desc'>get_desc</span><span class='lparen'>(</span><span class='id identifier rubyid_testname'>testname</span><span class='rparen'>)</span>
   <span class='ivar'>@spec</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tuple'>tuple</span><span class='op'>|</span>
@@ -425,14 +449,81 @@
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="get_total_points-instance_method">
+  
+    #<strong>get_total_points</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the total number of points for all rubric items.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'>
+<p>the total number of points for all rubric items</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+89
+90
+91
+92
+93
+94
+95</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 89</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_total_points'>get_total_points</span>
+  <span class='id identifier rubyid_total'>total</span> <span class='op'>=</span> <span class='float'>0.0</span>
+  <span class='ivar'>@spec</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_item'>item</span><span class='op'>|</span>
+    <span class='id identifier rubyid_total'>total</span> <span class='op'>+=</span> <span class='id identifier rubyid_item'>item</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_total'>total</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
       <div id="footer">
-  Generated on Fri Aug 20 12:49:44 2021 by
+  Generated on Fri Jan 13 17:08:53 2023 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.7.4).
+  0.9.26 (ruby-2.7.0).
 </div>
 
     </div>

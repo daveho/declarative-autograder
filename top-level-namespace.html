@@ -131,6 +131,24 @@
   <span class='kw'>return</span> <span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span>
 <span class='kw'>end</span></pre></dd>
       
+        <dt id="DEFAULT_JUDGE-constant" class="">DEFAULT_JUDGE =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Default test judge. It considers a test to have passed if the last boolean value in the outcomes array is true.  This obviously works for “normal” tests executed with <span class='object_link'><a href="X.html#run-class_method" title="X.run (method)">X.run</a></span>, which only produce a single boolean. It will also work well with tests which execute <span class='object_link'><a href="X.html#all-class_method" title="X.all (method)">X.all</a></span>. It is probably not a good choice for tests executed with <span class='object_link'><a href="X.html#inorder-class_method" title="X.inorder (method)">X.inorder</a></span>, since that produces multiple test results in the outcomes array, which may vary in value.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_outcomes'>outcomes</span><span class='rparen'>)</span> <span class='kw'>do</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_outcomes'>outcomes</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='float'>1.0</span> <span class='op'>:</span> <span class='float'>0.0</span>
+<span class='kw'>end</span></pre></dd>
+      
     </dl>
   
 
@@ -145,9 +163,9 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Aug 20 12:49:44 2021 by
+  Generated on Fri Jan 13 17:08:53 2023 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.7.4).
+  0.9.26 (ruby-2.7.0).
 </div>
 
     </div>

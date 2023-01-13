@@ -311,12 +311,12 @@
       <pre class="lines">
 
 
-95
-96
-97</pre>
+116
+117
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 116</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
   <span class='ivar'>@msgs</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -359,12 +359,12 @@
       <pre class="lines">
 
 
-153
-154
-155</pre>
+174
+175
+176</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 174</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clear'>clear</span>
   <span class='ivar'>@msgs</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span>
@@ -418,12 +418,12 @@
       <pre class="lines">
 
 
-147
-148
-149</pre>
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 147</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 168</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_msgs'>get_msgs</span>
   <span class='kw'>return</span> <span class='ivar'>@msgs</span><span class='period'>.</span><span class='id identifier rubyid_clone'>clone</span>
@@ -497,21 +497,21 @@
       <pre class="lines">
 
 
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143</pre>
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 132</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 153</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='comma'>,</span> <span class='label'>student_visible:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='comment'># Send to private log
@@ -608,16 +608,16 @@
       <pre class="lines">
 
 
-116
-117
-118
-119
-120
-121
-122</pre>
+137
+138
+139
+140
+141
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 137</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_log_cmd_output'>log_cmd_output</span><span class='lparen'>(</span><span class='id identifier rubyid_kind'>kind</span><span class='comma'>,</span> <span class='id identifier rubyid_output'>output</span><span class='comma'>,</span> <span class='id identifier rubyid_visibility'>visibility</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_logfn'>logfn</span> <span class='op'>=</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='rparen'>)</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_visibility'>visibility</span> <span class='op'>==</span> <span class='symbol'>:public</span> <span class='op'>?</span> <span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_logprivate'>logprivate</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -677,13 +677,13 @@
       <pre class="lines">
 
 
-103
-104
-105
-106</pre>
+124
+125
+126
+127</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'autograder2.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'autograder2.rb', line 124</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_logprivate'>logprivate</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='rparen'>)</span>
   <span class='comment'># Print to stdout so the message is reported to instructors by Gradescope
@@ -699,9 +699,9 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Aug 20 12:49:44 2021 by
+  Generated on Fri Jan 13 17:08:53 2023 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.7.4).
+  0.9.26 (ruby-2.7.0).
 </div>
 
     </div>
