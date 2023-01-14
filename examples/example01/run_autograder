@@ -30,7 +30,7 @@ plan = X.all(
 
   # compile the student program
   X.test(:make_succeeds, X.all(X.make('-f', 'Makefile.test', 'hello'),
-                         X.check_exe('hello'))),
+                               X.check_exe('hello'))),
 
   # execute unit tests
   X.inorder(
