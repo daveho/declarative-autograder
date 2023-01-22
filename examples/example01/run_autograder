@@ -32,7 +32,7 @@ plan = X.all(
   X.test(:make_succeeds, X.all(X.make('-f', 'Makefile.test', 'hello'),
                                X.check_exe('hello'))),
 
-  # execute unit tests
+  # execute tests
   X.inorder(
     X.test(:test1, X.run('./run_test.sh', './hello', 'test1')),
     X.test(:test2, X.run('./run_test.sh', './hello', 'test2')),
