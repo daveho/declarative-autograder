@@ -286,7 +286,7 @@ class X
       filenames.each do |filename|
         full_filename = "#{checkdir}/#{filename}"
         logger.log("Checking that #{filename} exists#{check_exe ? ' and is executable' : ''}")
-        if File.exists?(full_filename) and (!check_exe || File.executable?(full_filename))
+        if File.exist?(full_filename) and (!check_exe || File.executable?(full_filename))
           checks.push(true)
         else
           logger.log("#{filename} doesn't exist#{check_exe ? ', or is not executable' : ''}")
